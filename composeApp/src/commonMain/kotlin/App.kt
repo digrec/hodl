@@ -8,13 +8,15 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import hodl.composeapp.generated.resources.Res
+import hodl.composeapp.generated.resources.compose_multiplatform
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-import hodl.composeapp.generated.resources.Res
-import hodl.composeapp.generated.resources.compose_multiplatform
-
+/**
+ * Created by Dejan Igrec
+ */
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 @Preview

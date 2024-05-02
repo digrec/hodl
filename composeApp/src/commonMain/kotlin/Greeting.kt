@@ -1,3 +1,6 @@
+/**
+ * Created by Dejan Igrec
+ */
 class Greeting {
     private val platform = getPlatform()
 
