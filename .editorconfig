@@ -1,0 +1,6 @@
+# Top-most EditorConfig file
+root = true
+
+# End every file with a newline
+[*]
+insert_final_newline = true
