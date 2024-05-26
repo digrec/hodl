@@ -17,7 +17,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 /**
  * Created by Dejan Igrec
  */
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 @Preview
 fun App() {
