@@ -1,10 +1,10 @@
 [versions]
-agp = "8.6.1"
+agp = "8.5.2"
 android-compileSdk = "34"
 android-minSdk = "24"
 android-targetSdk = "34"
 activityCompose = "1.9.3"
-composePlugin = "1.6.11"
+compose-multiplatform = "1.7.1"
 constraintLayout = "2.1.4"
 coreKtx = "1.13.1"
 espresso = "3.6.1"
@@ -12,7 +12,6 @@ junit = "4.13.2"
 junitExt = "1.2.1"
 kermit = "2.0.3"
 kotlin = "2.0.21"
-material = "1.12.0"
 
 [libraries]
 androidx-activityCompose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
@@ -20,7 +19,6 @@ androidx-constraintLayout = { group = "androidx.constraintlayout", name = "const
 androidx-coreKtx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-espressoCore = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitExt" }
-androidx-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 kermit = { group = "co.touchlab", name = "kermit", version.ref = "kermit" }
 kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
@@ -29,6 +27,6 @@ kotlin-testJunit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit",
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
-jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "composePlugin" }
+composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
