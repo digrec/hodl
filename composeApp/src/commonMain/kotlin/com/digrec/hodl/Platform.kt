@@ -1,3 +1,5 @@
+package com.digrec.hodl
+
 /**
  * Created by Dejan Igrec
  */

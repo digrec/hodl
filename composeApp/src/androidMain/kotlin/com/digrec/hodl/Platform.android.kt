@@ -1,3 +1,5 @@
+package com.digrec.hodl
+
 import android.os.Build
 
 /**
