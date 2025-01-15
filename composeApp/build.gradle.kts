@@ -36,6 +36,7 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activityCompose)
+            implementation(libs.koin.android)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -45,6 +46,9 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.kermit)
+            implementation(libs.koin)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.composeViewmodel)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
