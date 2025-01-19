@@ -5,7 +5,7 @@ import ComposeApp
  * Created by Dejan Igrec
  */
 @main
-struct iOSApp: App {
+struct iOSApp: SwiftUI.App {
 
     init() {
         KoinAppKt.doInitKoin {
