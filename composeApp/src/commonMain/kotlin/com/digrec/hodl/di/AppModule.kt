@@ -1,6 +1,6 @@
 package com.digrec.hodl.di
 
-import com.digrec.hodl.Greeting
+import com.digrec.hodl.feature.greeting.data.Greeting
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 

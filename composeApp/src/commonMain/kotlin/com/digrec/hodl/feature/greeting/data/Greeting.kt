@@ -1,4 +1,6 @@
-package com.digrec.hodl
+package com.digrec.hodl.feature.greeting.data
+
+import com.digrec.hodl.feature.greeting.domain.getPlatform
 
 /**
  * Created by Dejan Igrec
