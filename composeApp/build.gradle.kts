@@ -31,13 +31,12 @@ kotlin {
     jvm("desktop")
 
     sourceSets {
-        val desktopMain by getting
-
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activityCompose)
             implementation(libs.koin.android)
         }
+        
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -50,6 +49,8 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.composeViewmodel)
         }
+
+        val desktopMain by getting
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
         }
