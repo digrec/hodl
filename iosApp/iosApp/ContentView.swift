@@ -1,6 +1,6 @@
 import UIKit
 import SwiftUI
-import ComposeApp
+import Shared
 
 /**
  * Created by Dejan Igrec

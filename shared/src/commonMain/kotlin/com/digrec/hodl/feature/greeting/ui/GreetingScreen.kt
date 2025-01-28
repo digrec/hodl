@@ -13,8 +13,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.digrec.hodl.feature.greeting.data.Greeting
 import com.digrec.hodl.ui.theme.App
-import hodl.composeapp.generated.resources.Res
-import hodl.composeapp.generated.resources.compose_multiplatform
+import hodl.shared.generated.resources.Res
+import hodl.shared.generated.resources.compose_multiplatform
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject

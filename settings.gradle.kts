@@ -1,4 +1,3 @@
-rootProject.name = "Hodl"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
@@ -28,4 +27,7 @@ dependencyResolutionManagement {
     }
 }
 
-include(":composeApp")
+rootProject.name = "Hodl"
+include(":androidApp")
+include(":desktopApp")
+include(":shared")
