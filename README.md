@@ -7,7 +7,6 @@ Kotlin Multiplatform project targeting Android, iOS and Desktop.
 This KMP project utilizes a modular architecture, combining traditional KMP module organization with
 Clean Architecture principles and a package-by-feature structure for improved maintainability and scalability.
 
-
 ```
 Hodl/
 ├── shared/                              // Code that's shared across KMP applications
@@ -47,3 +46,7 @@ Hodl/
 ```
 
 Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+
+## How to run
+
+Open the project in Android Studio or Fleet and run `androidApp`, `iosApp` or `desktopApp` run configuration.
