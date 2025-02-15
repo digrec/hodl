@@ -27,14 +27,20 @@ import org.koin.compose.koinInject
 fun GreetingScreen() {
     Surface(modifier = Modifier.fillMaxSize()) {
         var showContent by remember { mutableStateOf(false) }
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
             Button(onClick = { showContent = !showContent }) {
                 Text("Click me!")
             }
             AnimatedVisibility(showContent) {
                 val greeting = koinInject<Greeting>()
                 val greet = remember { greeting.greet() }
-                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(
+                    Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
                     Image(painterResource(Res.drawable.compose_multiplatform), null)
                     Text(
                         text = "Compose: $greet",
