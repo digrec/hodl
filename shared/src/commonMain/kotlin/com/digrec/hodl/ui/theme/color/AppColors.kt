@@ -14,6 +14,6 @@ data class AppColors internal constructor(
 )
 
 @Composable
-fun appColors(): AppColors = remember() {
+fun appColors(): AppColors = remember {
     darkColorScheme()
 }
