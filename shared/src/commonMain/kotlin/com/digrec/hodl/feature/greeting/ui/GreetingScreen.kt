@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -28,7 +29,9 @@ fun GreetingScreen() {
     Surface(modifier = Modifier.fillMaxSize()) {
         var showContent by remember { mutableStateOf(false) }
         Column(
-            Modifier.fillMaxWidth(),
+            Modifier
+                .fillMaxWidth()
+                .safeContentPadding(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Button(onClick = { showContent = !showContent }) {
