@@ -5,4 +5,6 @@ import androidx.compose.ui.window.ComposeUIViewController
 /**
  * Created by Dejan Igrec
  */
-fun MainViewController() = ComposeUIViewController { HodlApp() }
+fun MainViewController() = ComposeUIViewController {
+    HodlApp()
+}
