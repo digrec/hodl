@@ -1,25 +1,23 @@
-import UIKit
-import SwiftUI
 import Shared
+import SwiftUI
+import UIKit
 
-/**
- * Created by Dejan Igrec
- */
+/// Created by Dejan Igrec
 struct ComposeView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
         MainViewControllerKt.MainViewController()
     }
 
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+    func updateUIViewController(
+        _ uiViewController: UIViewController, context: Context
+    ) {
     }
 }
 
-/**
- * Created by Dejan Igrec
- */
+/// Created by Dejan Igrec
 struct ContentView: View {
     var body: some View {
         ComposeView()
-            .ignoresSafeArea(.keyboard) // Compose has own keyboard handler
+            .ignoresSafeArea(.keyboard)  // Compose has own keyboard handler
     }
 }

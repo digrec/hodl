@@ -1,9 +1,7 @@
-import SwiftUI
 import Shared
+import SwiftUI
 
-/**
- * Created by Dejan Igrec
- */
+/// Created by Dejan Igrec
 @main
 struct iOSApp: SwiftUI.App {
 
