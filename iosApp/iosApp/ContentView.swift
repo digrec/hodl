@@ -18,6 +18,8 @@ struct ComposeView: UIViewControllerRepresentable {
 struct ContentView: View {
     var body: some View {
         ComposeView()
+            .preferredColorScheme(.dark)  // Force dark mode
+            .ignoresSafeArea()  // Extend background behind safe areas
             .ignoresSafeArea(.keyboard)  // Compose has own keyboard handler
     }
 }
