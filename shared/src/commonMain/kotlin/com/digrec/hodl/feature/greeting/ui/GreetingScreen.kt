@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import com.digrec.hodl.feature.greeting.data.Greeting
 import com.digrec.hodl.ui.theme.App
 import hodl.shared.generated.resources.Res
@@ -29,8 +30,11 @@ import org.koin.compose.koinInject
  */
 @Composable
 @Preview
-fun GreetingScreen() {
-    Surface(modifier = Modifier.fillMaxSize()) {
+fun GreetingScreen(
+    navHostController: NavHostController,
+    modifier: Modifier = Modifier,
+) {
+    Surface(modifier = modifier.fillMaxSize()) {
         var showContent by remember { mutableStateOf(false) }
         Column(
             Modifier
