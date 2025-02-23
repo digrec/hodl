@@ -13,6 +13,7 @@ junitExt = "1.2.1"
 kermit = "2.0.5"
 koin = "4.0.1"
 kotlin = "2.1.10"
+lifecycleViewmodel = "2.8.4"
 navigationCompose = "2.8.0-alpha13"
 
 [libraries]
@@ -21,6 +22,7 @@ androidx-constraintLayout = { group = "androidx.constraintlayout", name = "const
 androidx-coreKtx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-espressoCore = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitExt" }
+androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "lifecycleViewmodel" }
 androidx-navigation = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 kermit = { group = "co.touchlab", name = "kermit", version.ref = "kermit" }
