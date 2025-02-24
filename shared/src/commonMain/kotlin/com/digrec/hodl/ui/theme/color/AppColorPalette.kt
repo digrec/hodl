@@ -19,7 +19,7 @@ object AppColorPalette {
     /**
      * Background color.
      */
-    val black: Color = Color(0xFF212121)
+    val black: Color = Color(0xFF141218)
     val red: Color = Color(0xFFF7251A)
     val green: Color = Color(0xFF5AF400)
 }

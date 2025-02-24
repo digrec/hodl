@@ -49,3 +49,7 @@ android {
         }
     }
 }
+
+dependencies {
+    implementation(libs.androidx.splashScreen)
+}
