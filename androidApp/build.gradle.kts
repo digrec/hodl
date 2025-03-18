@@ -17,16 +17,16 @@ kotlin {
 
 android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
-    namespace = "com.digrec.hodl"
+    namespace = libs.versions.packageName.get()
 
     defaultConfig {
-        applicationId = "com.digrec.hodl"
+        applicationId = libs.versions.packageName.get()
 
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
 
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = calculateVersionCode(libs.versions.versionName.get(), logger)
+        versionName = libs.versions.versionName.get()
     }
 
     buildTypes {

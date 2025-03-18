@@ -20,13 +20,13 @@ kotlin {
 
 compose.desktop {
     application {
-        mainClass = "com.digrec.hodl.MainKt"
+        mainClass = "${libs.versions.packageName.get()}.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
 
-            packageName = "com.digrec.hodl"
-            packageVersion = "1.0.0"
+            packageName = libs.versions.packageName.get()
+            packageVersion = libs.versions.versionName.get()
         }
     }
 }

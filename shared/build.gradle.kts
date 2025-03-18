@@ -52,7 +52,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.digrec.hodl.shared"
+    namespace = "${libs.versions.packageName.get()}.shared"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
@@ -66,4 +66,15 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+}
+
+// Updates iOS version during the resource generation phase
+tasks.named("generateComposeResClass") {
+    dependsOn("updateIosVersion")
+}
+
+tasks.register<UpdateIosVersion>("updateIosVersion") {
+    val vName = libs.versions.versionName.get()
+    versionName.set(vName)
+    versionCode.set(calculateVersionCode(vName, logger))
 }
