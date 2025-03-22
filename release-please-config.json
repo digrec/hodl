@@ -55,7 +55,6 @@
     },
     {
       "type": "ci",
-      // this is not showing in the PR :(
       "section": "Continuous Integration",
       "hidden": false
     }
