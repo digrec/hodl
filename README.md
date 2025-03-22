@@ -67,9 +67,6 @@ To make a release:
 commits are pushed to the main branch
 3. Once the release PR is merged, a new version will be published and tags will be created
 
-For manual version overrides or additional release configuration, see the `release-please-config.json` 
-file at the repository root.
-
 ## How to run
 
 Open the project in Android Studio or Fleet and run `androidApp`, `iosApp` or `desktopApp` run configuration.
