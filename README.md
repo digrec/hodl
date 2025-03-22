@@ -1,5 +1,7 @@
 # Hodl
 
+![version](https://img.shields.io/static/v1?label=version&message=1.0.0&color=blue) <!-- x-release-please-version -->
+
 Kotlin Multiplatform project targeting Android, iOS and Desktop.
 
 ## Project Structure
@@ -46,6 +48,27 @@ Hodl/
 ```
 
 Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+
+### Versioning
+
+This project uses [Release Please](https://github.com/googleapis/release-please) for automated 
+version management and changelog generation. 
+
+Release Please:
+
+- Automatically determines the next semantic version based on conventional commits
+- Creates release PRs with version bumps and updated changelog
+- Updates version badges and references throughout the codebase
+
+To make a release:
+1. Ensure all commits follow [Conventional Commits](https://www.conventionalcommits.org/) format 
+(e.g., `feat:`, `fix:`, `docs:`, etc.)
+2. The Release Please GitHub Action will automatically create a release PR when new conventional 
+commits are pushed to the main branch
+3. Once the release PR is merged, a new version will be published and tags will be created
+
+For manual version overrides or additional release configuration, see the `release-please-config.json` 
+file at the repository root.
 
 ## How to run
 

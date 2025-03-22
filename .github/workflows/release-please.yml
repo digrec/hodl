@@ -1,0 +1,41 @@
+# Workflow which makes GitHub Release PRs using Release Please GitHub Action.
+
+name: Release Please
+
+# On each push to the main branch.
+on:
+  push:
+    branches:
+      - main
+
+# Permissions to write repo contents (CHANGELOG.md) and to create Release PR-s.
+permissions:
+  contents: write
+  pull-requests: write
+
+# Runs 'release-please' job that prepares a Release PR using 'release-please-action'.
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare Release PR
+        uses: google-github-actions/release-please-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: go
+          package-name: com.digrec.hodl
+          config-file: release-please-config.json
+          pull-request-title-pattern: "chore${scope}: release${component} v${version}"
+          changelog-types: '[
+            {"type":"feat","section":"Features","hidden":false},
+            {"type":"fix","section":"Bug Fixes","hidden":false},
+            {"type":"perf","section":"Performance Improvements","hidden":false},
+            {"type":"revert","section":"Reverts","hidden":false},
+            {"type":"docs","section":"Documentation","hidden":false},
+            {"type":"style","section":"Styles","hidden":false},
+            {"type":"chore","section":"Chores","hidden":false},
+            {"type":"refactor","section":"Refactors","hidden":false},
+            {"type":"test","section":"Tests","hidden":false},
+            {"type":"build","section":"Build System","hidden":false},
+            {"type":"ci","section":"Continuous Integration","hidden":false}
+          ]'

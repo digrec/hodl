@@ -1,0 +1,28 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "release-type": "go",
+  "packages": {
+    ".": {
+      "package-name": "com.digrec.hodl",
+      "changelog-path": "CHANGELOG.md",
+      "bump-minor-pre-major": true,
+      "bump-patch-for-minor-pre-major": true,
+      "draft": false,
+      "prerelease": false,
+      "extra-files": [
+        {
+          "type": "toml",
+          "path": "gradle/libs.versions.toml",
+          "search": "versionName = \"1.0.0\" # x-release-please-version",
+          "replace": "versionName = \"${version}\" # x-release-please-version"
+        },
+        {
+          "type": "file",
+          "path": "README.md",
+          "search": "version&message=1.0.0&color=blue) <!-- x-release-please-version -->",
+          "replace": "version&message=${version}&color=blue) <!-- x-release-please-version -->"
+        }
+      ]
+    }
+  }
+}
