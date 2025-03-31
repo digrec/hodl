@@ -2,7 +2,6 @@
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
   "release-type": "go",
   "pull-request-title-pattern": "chore${scope}: release${component} v${version}",
-  "changelog-types": [],
   "changelog-sections": [
     {
       "type": "feat",
@@ -76,7 +75,7 @@
           "replace": "versionName = \"${version}\" # x-release-please-version"
         },
         {
-          "type": "file",
+          "type": "generic",
           "path": "README.md",
           "search": "version&message=1.0.0&color=blue) <!-- x-release-please-version -->",
           "replace": "version&message=${version}&color=blue) <!-- x-release-please-version -->"
