@@ -71,8 +71,7 @@
         {
           "type": "toml",
           "path": "gradle/libs.versions.toml",
-          "search": "versionName = \"1.0.0\" # x-release-please-version",
-          "replace": "versionName = \"${version}\" # x-release-please-version"
+          "jsonpath": "$.versions.versionName"
         },
         {
           "type": "generic",
