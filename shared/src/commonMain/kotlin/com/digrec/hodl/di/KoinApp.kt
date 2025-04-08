@@ -1,6 +1,6 @@
 package com.digrec.hodl.di
 
-import com.digrec.hodl.feature.greeting.greetingModule
+import com.digrec.hodl.feature.home.homeModule
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.includes
@@ -13,6 +13,6 @@ fun initKoin(config: KoinAppDeclaration? = null) {
     startKoin {
         includes(config)
         modules(appModule)
-        modules(greetingModule)
+        modules(homeModule)
     }
 }

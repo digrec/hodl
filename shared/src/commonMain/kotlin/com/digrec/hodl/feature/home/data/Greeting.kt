@@ -1,6 +1,6 @@
-package com.digrec.hodl.feature.greeting.data
+package com.digrec.hodl.feature.home.data
 
-import com.digrec.hodl.feature.greeting.domain.getPlatform
+import com.digrec.hodl.feature.home.domain.getPlatform
 
 /**
  * Created by Dejan Igrec

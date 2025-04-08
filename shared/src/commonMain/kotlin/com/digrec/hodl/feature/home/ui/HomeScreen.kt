@@ -1,4 +1,4 @@
-package com.digrec.hodl.feature.greeting.ui
+package com.digrec.hodl.feature.home.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
@@ -20,20 +20,24 @@ import androidx.navigation.NavHostController
 import com.digrec.hodl.ui.theme.App
 import hodl.shared.generated.resources.Res
 import hodl.shared.generated.resources.compose_multiplatform
+import hodl.shared.generated.resources.home
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
 /**
+ * Main screen of the application.
+ *
  * Created by Dejan Igrec
  */
 @Composable
 @Preview
-fun GreetingScreen(
+fun HomeScreen(
     navHostController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
-    val viewModel: GreetingViewModel = koinViewModel()
+    val viewModel: HomeViewModel = koinViewModel()
     Surface(modifier = modifier.fillMaxSize()) {
         var showContent by remember { mutableStateOf(false) }
         Column(
@@ -42,6 +46,10 @@ fun GreetingScreen(
                 .safeContentPadding(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            Text(
+                text = stringResource(Res.string.home),
+                style = App.typographies.headline,
+            )
             Button(onClick = { showContent = !showContent }) {
                 Text("Click me!")
             }

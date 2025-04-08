@@ -1,4 +1,4 @@
-package com.digrec.hodl.feature.greeting.domain
+package com.digrec.hodl.feature.home.domain
 
 import platform.UIKit.UIDevice
 
