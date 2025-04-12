@@ -70,3 +70,14 @@ commits are pushed to the main branch
 ## How to run
 
 Open the project in Android Studio or Fleet and run `androidApp`, `iosApp` or `desktopApp` run configuration.
+
+### Desktop
+
+Run native distribution of the desktop app using this command:
+
+```shell
+./gradlew runDistributable
+```
+
+- Desktop app version is then shown correctly because `jpackage.app-version` is set from
+  the `packageVersion` defined in desktop `build.gradle.kts` file.

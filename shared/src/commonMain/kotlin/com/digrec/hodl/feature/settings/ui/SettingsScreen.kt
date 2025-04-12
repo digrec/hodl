@@ -12,9 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.digrec.hodl.ui.theme.App
 import hodl.shared.generated.resources.Res
+import hodl.shared.generated.resources.app_version
 import hodl.shared.generated.resources.settings
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
 
 /**
  * Created by Dejan Igrec
@@ -25,6 +27,8 @@ fun SettingsScreen(
     navHostController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
+    val viewModel: SettingsViewModel = koinViewModel()
+
     Surface(modifier = modifier.fillMaxSize()) {
         Column(
             Modifier
@@ -35,6 +39,10 @@ fun SettingsScreen(
             Text(
                 text = stringResource(Res.string.settings),
                 style = App.typographies.headline,
+            )
+            Text(
+                text = stringResource(Res.string.app_version, viewModel.appVersion),
+                style = App.typographies.body,
             )
         }
     }

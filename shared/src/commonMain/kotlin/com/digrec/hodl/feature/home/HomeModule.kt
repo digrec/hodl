@@ -5,5 +5,7 @@ import org.koin.dsl.module
 
 internal val homeModule
     get() = module {
-        factory { HomeViewModel(greeting = get()) }
+        factory {
+            HomeViewModel(greeting = get())
+        }
     }

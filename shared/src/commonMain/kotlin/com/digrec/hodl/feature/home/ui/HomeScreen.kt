@@ -38,6 +38,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
 ) {
     val viewModel: HomeViewModel = koinViewModel()
+
     Surface(modifier = modifier.fillMaxSize()) {
         var showContent by remember { mutableStateOf(false) }
         Column(
