@@ -2,7 +2,9 @@
 
 ![version](https://img.shields.io/static/v1?label=version&message=1.0.0&color=blue) <!-- x-release-please-version -->
 
-Kotlin Multiplatform project targeting Android, iOS and Desktop.
+Kotlin Multiplatform app for Android, iOS and Desktop.
+
+![Hodl App Screenshot](HodlApp.png){width=30%}
 
 ## Project Structure
 
