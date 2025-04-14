@@ -4,7 +4,7 @@
 
 Kotlin Multiplatform app for Android, iOS and Desktop.
 
-![Hodl App Screenshot](HodlApp.png){width=30%}
+<img src="HodlApp.png" alt="Hodl App Screenshot" width="30%" />
 
 ## Project Structure
 
