@@ -39,7 +39,7 @@ fun SettingsScreen(
                 .fillMaxSize()
                 .safeContentPadding(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween
+            verticalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
                 text = stringResource(Res.string.settings),
@@ -48,7 +48,7 @@ fun SettingsScreen(
             Text(
                 text = stringResource(Res.string.app_version, viewModel.appVersion),
                 style = App.typographies.label,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = 16.dp),
             )
         }
     }
