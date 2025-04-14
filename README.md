@@ -2,7 +2,7 @@
 
 ![version](https://img.shields.io/static/v1?label=version&message=1.0.0&color=blue) <!-- x-release-please-version -->
 
-Kotlin Multiplatform app for Android, iOS and Desktop.
+Crypto portfolio tracking app for Android, iOS and Desktop.
 
 <img src="HodlApp.png" alt="Hodl App Screenshot" width="30%" />
 
