@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.digrec.hodl.feature.home.ui.HomeScreen
 import com.digrec.hodl.feature.settings.ui.SettingsScreen
+import com.digrec.hodl.feature.transactions.ui.TransactionsScreen
 
 /**
  * Implements the application's navigation graph.
@@ -35,6 +36,9 @@ fun Navigation(
     ) {
         composable(route = Route.Home.route) {
             HomeScreen(navHostController = navHostController)
+        }
+        composable(route = Route.Transactions.route) {
+            TransactionsScreen(navHostController = navHostController)
         }
         composable(route = Route.Settings.route) {
             SettingsScreen(navHostController = navHostController)

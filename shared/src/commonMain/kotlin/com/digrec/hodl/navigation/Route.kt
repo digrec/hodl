@@ -9,5 +9,6 @@ package com.digrec.hodl.navigation
  */
 sealed class Route(val route: String) {
     data object Home : Route(route = "/home")
+    data object Transactions : Route(route = "/transactions")
     data object Settings : Route(route = "/settings")
 }
