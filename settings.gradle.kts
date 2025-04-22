@@ -1,5 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
+rootProject.name = "Hodl"
+
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
@@ -33,7 +35,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Hodl"
 include(":androidApp")
 include(":desktopApp")
 include(":shared")
