@@ -96,4 +96,4 @@ Compose Hot Reload is supported only for the desktop target and requires JetBrai
 
 **IntelliJ IDE**
 
-Click `Run MainKt` button in the file gutter of the `com.digrec.hodl.Main.kt` file. 
+Click `Run 'Main [desktop]'` button in the file gutter of the `com.digrec.hodl.Main.kt` file. 
