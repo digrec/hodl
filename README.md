@@ -71,7 +71,7 @@ commits are pushed to the main branch
 
 ## How to run
 
-Open the project in Android Studio or Fleet and run `androidApp`, `iosApp` or `desktopApp` run configuration.
+Open the project in Android Studio or IntelliJ and run `androidApp`, `iosApp` or `desktopApp` run configuration.
 
 ### Desktop
 
@@ -83,3 +83,17 @@ Run native distribution of the desktop app using this command:
 
 - Desktop app version is then shown correctly because `jpackage.app-version` is set from
   the `packageVersion` defined in desktop `build.gradle.kts` file.
+
+#### Compose Hot Reload
+
+Compose Hot Reload is supported only for the desktop target and requires JetBrains JDK 21 toolchain.
+
+**Gradle**
+
+```shell
+./gradlew :desktopApp:desktopRun -DmainClass=com.digrec.hodl.MainKt
+```
+
+**IntelliJ IDE**
+
+Click `Run MainKt` button in the file gutter of the `com.digrec.hodl.Main.kt` file. 

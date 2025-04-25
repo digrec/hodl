@@ -1,9 +1,11 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.composeHotReload)
 }
 
 kotlin {
@@ -29,4 +31,9 @@ compose.desktop {
             packageVersion = libs.versions.versionName.get()
         }
     }
+}
+
+composeCompiler {
+    // Hot reload support
+    featureFlags.add(ComposeFeatureFlag.OptimizeNonSkippingGroups)
 }
