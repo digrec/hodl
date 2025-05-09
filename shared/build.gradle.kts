@@ -19,6 +19,7 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "Shared"
             isStatic = true
+            optimized = true
         }
     }
 
@@ -34,6 +35,7 @@ kotlin {
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
+            implementation(compose.materialIconsExtended)
             implementation(compose.material3)
             implementation(compose.material3AdaptiveNavigationSuite)
             implementation(compose.ui)
