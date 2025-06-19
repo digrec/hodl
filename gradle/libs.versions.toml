@@ -11,6 +11,7 @@ constraintLayout = "2.2.1"
 coreKtx = "1.16.0"
 espresso = "3.6.1"
 compose-hotReload = "1.0.0-alpha11"
+coroutines = "1.10.2"
 junit = "4.13.2"
 junitExt = "1.2.1"
 kermit = "2.0.5"
@@ -37,6 +38,8 @@ koin-compose = { group = "io.insert-koin", name = "koin-compose", version.ref = 
 koin-composeViewmodel = { group = "io.insert-koin", name = "koin-compose-viewmodel", version.ref = "koin" }
 kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin" }
+kotlinx-coroutinesCore = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx-coroutinesSwing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "coroutines" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

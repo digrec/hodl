@@ -49,9 +49,14 @@ kotlin {
             implementation(libs.koin.composeViewmodel)
         }
 
+        iosMain.dependencies {
+            implementation(libs.kotlinx.coroutinesCore)
+        }
+
         val desktopMain by getting {
             dependencies {
                 api(compose.desktop.currentOs)
+                implementation(libs.kotlinx.coroutinesSwing)
             }
         }
     }
