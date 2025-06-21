@@ -1,5 +1,6 @@
 package com.digrec.hodl.di
 
+import com.digrec.hodl.core.coreModule
 import com.digrec.hodl.feature.home.homeModule
 import com.digrec.hodl.feature.settings.settingsModule
 import com.digrec.hodl.feature.transactions.transactionsModule
@@ -18,6 +19,7 @@ fun initKoin(config: KoinAppDeclaration? = null) {
         includes(config)
         modules(
             appModule,
+            coreModule,
             homeModule,
             transactionsModule,
             settingsModule,

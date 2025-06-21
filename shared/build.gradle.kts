@@ -6,9 +6,15 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
 }
 
 kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
+
     androidTarget()
 
     listOf(
@@ -43,6 +49,8 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.navigation)
+            implementation(libs.androidx.roomRuntime)
+            implementation(libs.androidx.sqlite)
             implementation(libs.kermit)
             api(libs.koin)
             implementation(libs.koin.compose)
@@ -82,6 +90,15 @@ composeCompiler {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+    add("kspAndroid", libs.androidx.roomCompiler)
+    add("kspIosSimulatorArm64", libs.androidx.roomCompiler)
+    add("kspIosX64", libs.androidx.roomCompiler)
+    add("kspIosArm64", libs.androidx.roomCompiler)
+    add("kspDesktop", libs.androidx.roomCompiler)
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
 // Updates iOS version during the resource generation phase
