@@ -16,14 +16,14 @@ kotlin {
 }
 
 android {
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk = libs.versions.androidCompileSdk.get().toInt()
     namespace = libs.versions.packageName.get()
 
     defaultConfig {
         applicationId = libs.versions.packageName.get()
 
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        minSdk = libs.versions.androidMinSdk.get().toInt()
+        targetSdk = libs.versions.androidTargetSdk.get().toInt()
 
         versionCode = calculateVersionCode(libs.versions.versionName.get(), logger)
         versionName = libs.versions.versionName.get()

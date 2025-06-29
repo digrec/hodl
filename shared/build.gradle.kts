@@ -47,7 +47,7 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodel)
+            implementation(libs.androidx.viewmodel)
             implementation(libs.androidx.navigation)
             implementation(libs.androidx.roomRuntime)
             implementation(libs.androidx.sqlite)
@@ -72,10 +72,10 @@ kotlin {
 
 android {
     namespace = "${libs.versions.packageName.get()}.shared"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk = libs.versions.androidCompileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt()
+        minSdk = libs.versions.androidMinSdk.get().toInt()
     }
 
     kotlin {
