@@ -8,7 +8,6 @@ import com.digrec.hodl.navigation.NavigationScaffold
 import com.digrec.hodl.ui.theme.App
 import com.digrec.hodl.ui.theme.AppTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.koin.compose.KoinContext
 
 /**
  * Created by Dejan Igrec
@@ -16,13 +15,11 @@ import org.koin.compose.KoinContext
 @Composable
 @Preview
 fun HodlApp() {
-    KoinContext {
-        val navHostController = rememberNavController()
-        AppTheme {
-            NavigationScaffold(
-                navHostController = navHostController,
-                modifier = Modifier.background(color = App.colors.materialColors.background),
-            )
-        }
+    val navHostController = rememberNavController()
+    AppTheme {
+        NavigationScaffold(
+            navHostController = navHostController,
+            modifier = Modifier.background(color = App.colors.materialColors.background),
+        )
     }
 }
