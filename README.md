@@ -91,9 +91,10 @@ Compose Hot Reload is supported only for the desktop target and requires JetBrai
 **Gradle**
 
 ```shell
-./gradlew :desktopApp:desktopRunHot -DmainClass=com.digrec.hodl.MainKt --auto
+./gradlew :desktopApp:hotRunDesktop -DmainClass=com.digrec.hodl.MainKt --auto
 ```
 
 **IntelliJ IDE**
 
-Click `Run 'desktopApp [desktop]' with Compose Hot Reload` button in the file gutter of the `com.digrec.hodl.Main.kt` file. 
+Click `Run 'desktopApp [hotRunDesktop]' with Compose Hot Reload` button in the file gutter of the
+`com.digrec.hodl.Main.kt` file. 
