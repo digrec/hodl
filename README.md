@@ -9,7 +9,8 @@ Crypto portfolio tracking app for Android, iOS and Desktop.
 ## Project Structure
 
 This KMP project utilizes a modular architecture, combining traditional KMP module organization with
-Clean Architecture principles and a package-by-feature structure for improved maintainability and scalability.
+Clean Architecture principles and a package-by-feature structure for improved maintainability and
+scalability.
 
 ```
 Hodl/
@@ -49,29 +50,32 @@ Hodl/
     └── src/desktopMain/
 ```
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+Learn more
+about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
 
 ### Versioning
 
-This project uses [Release Please](https://github.com/googleapis/release-please) for automated 
-version management and changelog generation. 
+This project uses [Release Please](https://github.com/googleapis/release-please) for automated
+version management and changelog generation.
 
 Release Please:
 
-- Automatically determines the next semantic version based on conventional commits
-- Creates release PRs with version bumps and updated changelog
-- Updates version badges and references throughout the codebase
+* Automatically determines the next semantic version based on conventional commits
+* Creates release PRs with version bumps and updated changelog
+* Updates version badges and references throughout the codebase
 
 To make a release:
-1. Ensure all commits follow [Conventional Commits](https://www.conventionalcommits.org/) format 
-(e.g., `feat:`, `fix:`, `docs:`, etc.)
-2. The Release Please GitHub Action will automatically create a release PR when new conventional 
-commits are pushed to the main branch
+
+1. Ensure all commits follow [Conventional Commits](https://www.conventionalcommits.org/) format
+   (e.g., `feat:`, `fix:`, `docs:`, etc.)
+2. The Release Please GitHub Action will automatically create a release PR when new conventional
+   commits are pushed to the main branch
 3. Once the release PR is merged, a new version will be published and tags will be created
 
 ## How to run
 
-Open the project in Android Studio or IntelliJ and run `androidApp`, `iosApp` or `desktopApp` run configuration.
+Open the project in Android Studio or IntelliJ and run `androidApp`, `iosApp` or `desktopApp` run
+configuration.
 
 ### Desktop
 
@@ -81,7 +85,7 @@ Run native distribution of the desktop app using this command:
 ./gradlew runDistributable
 ```
 
-- Desktop app version is then shown correctly because `jpackage.app-version` is set from
+* Desktop app version is then shown correctly because `jpackage.app-version` is set from
   the `packageVersion` defined in desktop `build.gradle.kts` file.
 
 #### Compose Hot Reload
