@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.digrec.hodl.feature.currency.ui.CurrenciesScreen
 import com.digrec.hodl.feature.home.ui.HomeScreen
 import com.digrec.hodl.feature.settings.ui.SettingsScreen
 import com.digrec.hodl.feature.transactions.ui.TransactionsScreen
@@ -39,6 +40,9 @@ fun Navigation(
         }
         composable(route = Route.Transactions.route) {
             TransactionsScreen(navHostController = navHostController)
+        }
+        composable(route = Route.Currencies.route) {
+            CurrenciesScreen()
         }
         composable(route = Route.Settings.route) {
             SettingsScreen(navHostController = navHostController)
