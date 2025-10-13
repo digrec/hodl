@@ -1,7 +1,7 @@
 [versions]
 packageName = "com.digrec.hodl"
 versionName = "1.0.0" # x-release-please-version
-agp = "8.10.0"
+agp = "8.11.1"
 androidCompileSdk = "35"
 androidMinSdk = "24"
 androidTargetSdk = "35"
