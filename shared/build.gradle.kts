@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 
 plugins {
     alias(libs.plugins.androidLibrary)
@@ -84,11 +83,6 @@ android {
     kotlin {
         jvmToolchain(17)
     }
-}
-
-composeCompiler {
-    // Hot reload support
-    featureFlags.add(ComposeFeatureFlag.OptimizeNonSkippingGroups)
 }
 
 dependencies {
