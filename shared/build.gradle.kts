@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 
 plugins {
     alias(libs.plugins.androidLibrary)
@@ -24,7 +25,8 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "Shared"
             isStatic = true
-            optimized = true
+            optimized = buildType == NativeBuildType.RELEASE
+            freeCompilerArgs += "-Xbinary=bundleId=com.digrec.hodl.SharedFramework"
         }
     }
 
