@@ -1,20 +1,43 @@
-*.iml
-.kotlin
-.gradle
+# ==========================================
+# Build & Compiler Artifacts (Gradle, Kotlin, Android)
+# ==========================================
+.gradle/
+.kotlin/
 **/build/
-xcuserdata
 !src/**/build/
 local.properties
-.idea
-.DS_Store
-captures
-.externalNativeBuild
-.cxx
+.externalNativeBuild/
+.cxx/
+captures/
+/gradle/gradle-daemon-jvm.properties
+
+# ==========================================
+# IDE & Editor Configurations (IntelliJ, VS Code)
+# ==========================================
+.idea/
+*.iml
+/.vscode/
+
+# ==========================================
+# Xcode & iOS Development
+# ==========================================
+xcuserdata/
 *.xcodeproj/*
 !*.xcodeproj/project.pbxproj
 !*.xcodeproj/xcshareddata/
 !*.xcodeproj/project.xcworkspace/
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
+
 # Generated iOS version config file
 iosApp/Configuration/version.xcconfig
+
+# ==========================================
+# AI Agents & Assistants (Local settings only)
+# ==========================================
+/.agents/mcp_config.json
+
+# ==========================================
+# OS-Specific Files (macOS, etc.)
+# ==========================================
+.DS_Store
