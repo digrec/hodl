@@ -11,27 +11,38 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.digrec.hodl.ui.theme.App
+import com.digrec.hodl.ui.theme.AppTheme
 import hodl.shared.generated.resources.Res
 import hodl.shared.generated.resources.app_version
 import hodl.shared.generated.resources.settings
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
 /**
  * Created by Dejan Igrec
  */
 @Composable
-@Preview
 fun SettingsScreen(
     navHostController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: SettingsViewModel = koinViewModel()
 
+    SettingsContent(
+        appVersion = viewModel.appVersion,
+        modifier = modifier
+    )
+}
+
+@Composable
+fun SettingsContent(
+    appVersion: String,
+    modifier: Modifier = Modifier,
+) {
     Surface(modifier = modifier.fillMaxSize()) {
         Column(
             Modifier
@@ -46,10 +57,18 @@ fun SettingsScreen(
                 style = App.typographies.headline,
             )
             Text(
-                text = stringResource(Res.string.app_version, viewModel.appVersion),
+                text = stringResource(Res.string.app_version, appVersion),
                 style = App.typographies.label,
                 modifier = Modifier.padding(bottom = 16.dp),
             )
         }
+    }
+}
+
+@Preview
+@Composable
+private fun SettingsScreenPreview() {
+    AppTheme {
+        SettingsContent(appVersion = "1.0.0")
     }
 }

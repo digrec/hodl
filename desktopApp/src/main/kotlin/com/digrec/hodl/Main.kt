@@ -12,21 +12,22 @@ import org.koin.core.logger.Level
 /**
  * Created by Dejan Igrec
  */
-fun main() = application {
-
+fun main() {
     initKoin {
         printLogger(Level.DEBUG)
     }
 
-    Window(
-        title = "Hodl",
-        onCloseRequest = ::exitApplication,
-        state = rememberWindowState(
-            width = 1000.dp,
-            height = 800.dp,
-            position = WindowPosition.Aligned(Alignment.Center),
-        ),
-    ) {
-        HodlApp()
+    application {
+        Window(
+            title = "Hodl",
+            onCloseRequest = ::exitApplication,
+            state = rememberWindowState(
+                width = 1000.dp,
+                height = 800.dp,
+                position = WindowPosition.Aligned(Alignment.Center),
+            ),
+        ) {
+            HodlApp()
+        }
     }
 }

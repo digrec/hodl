@@ -22,20 +22,19 @@ Hodl/
 │       │       ├── core/                // Core business logic, use cases, interfaces
 │       │       │   ├── domain/
 │       │       │   └── data/
+│       │       ├── di/                  // Dependency injection
 │       │       ├── feature/             // Feature modules
-│       │       │   ├── authentication/
+│       │       │   ├── currency/
 │       │       │   │   ├── data/
 │       │       │   │   ├── domain/
 │       │       │   │   └── ui/          // UI Components, screens and ViewModels
+│       │       │   ├── home/
 │       │       │   ├── settings/
-│       │       │   │    └── ...         // Same structure as authentication
-│       │       │   └── ...
-│       │       ├── di/                  // Dependency injection
-│       │       ├── ui/                  // Shared UI components and theme
-│       │       │   ├── component/
-│       │       │   ├── theme/
-│       │       │   └── util/
-│       │       └── util/                // Shared utility functions
+│       │       │   └── transactions/
+│       │       ├── navigation/          // Navigation logic and graphs
+│       │       └── ui/                  // Shared UI components and theme
+│       │           ├── composition/     // Local composition providers
+│       │           └── theme/           // App theme, colors, typography
 │       ├── androidMain/                 // Kotlin code compiled for Android platform
 │       │   └── kotlin/com/digrec/hodl/
 │       ├── iosMain/                     // Kotlin code compiled for iOS platform
@@ -82,7 +81,7 @@ configuration.
 Run native distribution of the desktop app using this command:
 
 ```shell
-./gradlew runDistributable
+./gradlew :desktopApp:runDistributable
 ```
 
 * Desktop app version is then shown correctly because `jpackage.app-version` is set from
@@ -95,10 +94,10 @@ Compose Hot Reload is supported only for the desktop target and requires JetBrai
 **Gradle**
 
 ```shell
-./gradlew :desktopApp:hotRunDesktop --auto
+./gradlew :desktopApp:hotRun --auto
 ```
 
 **IntelliJ IDE**
 
-Click `Run 'desktopApp [desktop]' with Compose Hot Reload` button in the file gutter of the
+Click `Run 'desktopApp [hot]' with Compose Hot Reload` button in the file gutter of the
 `com.digrec.hodl.Main.kt` file. 

@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -19,8 +18,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.digrec.hodl.core.data.db.model.Currency
+import com.digrec.hodl.ui.theme.AppTheme
 import hodl.shared.generated.resources.Res
 import hodl.shared.generated.resources.back
 import hodl.shared.generated.resources.select_a_currency
@@ -68,7 +69,6 @@ internal fun CurrencyDetailContent(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CurrencyDetailView(
     currency: Currency,
@@ -119,5 +119,20 @@ private fun CurrencyDetailView(
                 style = MaterialTheme.typography.bodyLarge,
             )
         }
+    }
+}
+
+@Preview
+@Composable
+private fun CurrencyDetailContentPreview() {
+    AppTheme {
+        CurrencyDetailContent(
+            currencyId = 1,
+            currencies = listOf(
+                Currency(id = 1, name = "Bitcoin", symbol = "BTC")
+            ),
+            onBack = {},
+            canNavigateBack = true
+        )
     }
 }

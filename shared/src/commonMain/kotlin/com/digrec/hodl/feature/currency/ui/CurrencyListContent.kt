@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -17,8 +16,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.digrec.hodl.core.data.db.model.Currency
+import com.digrec.hodl.ui.theme.AppTheme
 import hodl.shared.generated.resources.Res
 import hodl.shared.generated.resources.currencies
 import hodl.shared.generated.resources.no_currencies_available
@@ -29,7 +30,6 @@ import org.jetbrains.compose.resources.stringResource
  *
  * Created by Dejan Igrec
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun CurrencyListContent(
     currencies: List<Currency>,
@@ -93,5 +93,20 @@ private fun CurrencyListItem(
                     Modifier
             )
     )
+}
+
+@Preview
+@Composable
+private fun CurrencyListContentPreview() {
+    AppTheme {
+        CurrencyListContent(
+            currencies = listOf(
+                Currency(id = 1, name = "Bitcoin", symbol = "BTC"),
+                Currency(id = 2, name = "Ethereum", symbol = "ETH")
+            ),
+            selectedCurrencyId = 1,
+            onCurrencyClick = {}
+        )
+    }
 }
 

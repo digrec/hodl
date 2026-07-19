@@ -7,13 +7,11 @@ import androidx.navigation.compose.rememberNavController
 import com.digrec.hodl.navigation.NavigationScaffold
 import com.digrec.hodl.ui.theme.App
 import com.digrec.hodl.ui.theme.AppTheme
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 /**
  * Created by Dejan Igrec
  */
 @Composable
-@Preview
 fun HodlApp() {
     val navHostController = rememberNavController()
     AppTheme {

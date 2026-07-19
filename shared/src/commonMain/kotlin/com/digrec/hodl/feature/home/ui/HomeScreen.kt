@@ -16,14 +16,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.digrec.hodl.ui.theme.App
+import com.digrec.hodl.ui.theme.AppTheme
 import hodl.shared.generated.resources.Res
 import hodl.shared.generated.resources.compose_multiplatform
 import hodl.shared.generated.resources.home
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
 /**
@@ -32,13 +33,24 @@ import org.koin.compose.viewmodel.koinViewModel
  * Created by Dejan Igrec
  */
 @Composable
-@Preview
 fun HomeScreen(
     navHostController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: HomeViewModel = koinViewModel()
+    val greetingState by viewModel.greetingState
 
+    HomeContent(
+        greetingState = greetingState,
+        modifier = modifier
+    )
+}
+
+@Composable
+fun HomeContent(
+    greetingState: String,
+    modifier: Modifier = Modifier,
+) {
     Surface(modifier = modifier.fillMaxSize()) {
         var showContent by remember { mutableStateOf(false) }
         Column(
@@ -55,18 +67,25 @@ fun HomeScreen(
                 Text("Click me!")
             }
             AnimatedVisibility(showContent) {
-                val greet by viewModel.greetingState
                 Column(
                     Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Image(painterResource(Res.drawable.compose_multiplatform), null)
                     Text(
-                        text = "Compose: $greet",
+                        text = "Compose: $greetingState",
                         style = App.typographies.title,
                     )
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun HomeScreenPreview() {
+    AppTheme {
+        HomeContent(greetingState = "Hello Preview!")
     }
 }

@@ -1,23 +1,25 @@
 plugins {
     alias(libs.plugins.androidApplication)
-    alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
 }
 
 kotlin {
-    androidTarget()
+    jvmToolchain(jdkVersion = 17)
 
-    sourceSets {
-        androidMain.dependencies {
-            implementation(project(":shared"))
-        }
+    dependencies {
+        implementation(projects.shared)
+        implementation(libs.androidx.activityCompose)
+        implementation(libs.koin.android)
+        implementation(libs.androidx.splashScreen)
+        debugImplementation(libs.compose.uiTooling)
+        debugImplementation(libs.compose.uiToolingPreview)
     }
 }
 
 android {
-    compileSdk = libs.versions.androidCompileSdk.get().toInt()
     namespace = libs.versions.packageName.get()
+    compileSdk = libs.versions.androidCompileSdk.get().toInt()
 
     defaultConfig {
         applicationId = libs.versions.packageName.get()
@@ -39,17 +41,9 @@ android {
         compose = true
     }
 
-    kotlin {
-        jvmToolchain(17)
-    }
-
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-}
-
-dependencies {
-    implementation(libs.androidx.splashScreen)
 }

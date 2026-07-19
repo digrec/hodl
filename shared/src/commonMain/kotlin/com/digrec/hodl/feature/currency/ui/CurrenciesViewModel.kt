@@ -7,13 +7,14 @@ import com.digrec.hodl.core.domain.repository.HodlRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 /**
  * Manages the UI state for the currencies feature, providing a list of currencies.
  *
  * Created by Dejan Igrec
  */
-class CurrenciesViewModel(private val hodlRepository: HodlRepository) : ViewModel() {
+class CurrenciesViewModel(hodlRepository: HodlRepository) : ViewModel() {
 
     val currencies: StateFlow<List<Currency>> = hodlRepository.getCurrencies()
         .stateIn(
@@ -21,4 +22,10 @@ class CurrenciesViewModel(private val hodlRepository: HodlRepository) : ViewMode
             started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000L),
             initialValue = emptyList()
         )
+
+    init {
+        viewModelScope.launch {
+            //insertTestCurrenciesIntoDB(hodlRepository)
+        }
+    }
 }
