@@ -30,6 +30,7 @@ androidx-activityCompose = { group = "androidx.activity", name = "activity-compo
 androidx-navigation = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 androidx-roomCompiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 androidx-roomRuntime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+androidx-roomTesting = { group = "androidx.room", name = "room-testing", version.ref = "room" }
 androidx-splashScreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashScreen" }
 androidx-sqlite = { group = "androidx.sqlite", name = "sqlite-bundled", version.ref = "sqlite" }
 androidx-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "viewmodel" }

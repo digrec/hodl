@@ -97,11 +97,12 @@ To maintain clean separation of concerns and enable error-free `@Preview` render
 
 All unit tests for shared business logic, ViewModels, DAOs, repositories, and Koin dependency injection graphs live in `shared/src/commonTest/kotlin/com/digrec/hodl/`.
 
-1. **Testing Stack**: Kotlin Test (`kotlin.test`), Coroutines Test (`kotlinx-coroutines-test`), Turbine (`app.cash.turbine`), and Koin Test (`koin-test`).
+1. **Testing Stack**: Kotlin Test (`kotlin.test`), Coroutines Test (`kotlinx-coroutines-test`), Turbine (`app.cash.turbine`), Koin Test (`koin-test`), and Room Testing (`androidx.room.testing`).
 2. **Main Dispatcher Rule**: ViewModels using `viewModelScope` require `Dispatchers.setMain(UnconfinedTestDispatcher())` in `@BeforeTest` and `Dispatchers.resetMain()` in `@AfterTest`.
 3. **Turbine for Streams**: Always test `Flow` / `StateFlow` emissions with Turbine `flow.test { assertEquals(..., awaitItem()) }`.
 4. **Fake DAO Isolation**: Use `FakeHodlDao` for repository/ViewModel unit tests to avoid DB latency.
 5. **Koin Verification**: When updating Koin modules, update `KoinModuleTest.kt` to verify dependency graph resolution.
+6. **Room Database Migration Testing**: Database migration tests live in `shared/src/desktopTest/kotlin/.../HodlDatabaseMigrationTest.kt` using `MigrationTestHelper` and `BundledSQLiteDriver()` to validate schema creation against `shared/schemas/` without requiring Android emulator runtime.
 
 ---
 
@@ -144,13 +145,16 @@ Before declaring any work complete, agents MUST execute build verification comma
 # 3. Execute KMP Unit Test Suite Across All Targets
 ./gradlew :shared:allTests
 
-# 4. Compile & Build all modules
+# 4. Execute Desktop Unit & Database Migration Tests
+./gradlew :shared:desktopTest
+
+# 5. Compile & Build all modules
 ./gradlew assemble
 
-# 5. Run Desktop App distribution
+# 6. Run Desktop App distribution
 ./gradlew :desktopApp:runDistributable
 
-# 6. Launch Desktop Hot Reload (interactive / dev testing)
+# 7. Launch Desktop Hot Reload (interactive / dev testing)
 ./gradlew :desktopApp:hotRun --auto
 ```
 

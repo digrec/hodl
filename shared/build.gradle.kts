@@ -62,12 +62,15 @@ kotlin {
     }
 
     sourceSets {
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
-            implementation(libs.kotlinx.coroutinesTest)
-            implementation(libs.koin.test)
-            implementation(libs.turbine)
+        commonTest {
+            dependencies {
+                implementation(libs.kotlin.test)
+                implementation(libs.kotlinx.coroutinesTest)
+                implementation(libs.koin.test)
+                implementation(libs.turbine)
+            }
         }
+        getByName("desktopTest") { dependencies { implementation(libs.androidx.roomTesting) } }
         androidMain.dependencies { implementation(libs.compose.uiTooling) }
         iosMain.dependencies { implementation(libs.kotlinx.coroutinesCore) }
     }
