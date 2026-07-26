@@ -33,49 +33,30 @@ import org.koin.compose.viewmodel.koinViewModel
  * Created by Dejan Igrec
  */
 @Composable
-fun HomeScreen(
-    navHostController: NavHostController,
-    modifier: Modifier = Modifier,
-) {
+fun HomeScreen(navHostController: NavHostController, modifier: Modifier = Modifier) {
     val viewModel: HomeViewModel = koinViewModel()
     val greetingState by viewModel.greetingState
 
-    HomeContent(
-        greetingState = greetingState,
-        modifier = modifier
-    )
+    HomeContent(greetingState = greetingState, modifier = modifier)
 }
 
 @Composable
-fun HomeContent(
-    greetingState: String,
-    modifier: Modifier = Modifier,
-) {
+fun HomeContent(greetingState: String, modifier: Modifier = Modifier) {
     Surface(modifier = modifier.fillMaxSize()) {
         var showContent by remember { mutableStateOf(false) }
         Column(
-            Modifier
-                .fillMaxWidth()
-                .safeContentPadding(),
+            Modifier.fillMaxWidth().safeContentPadding(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Text(
-                text = stringResource(Res.string.home),
-                style = App.typographies.headline,
-            )
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
-            }
+            Text(text = stringResource(Res.string.home), style = App.typographies.headline)
+            Button(onClick = { showContent = !showContent }) { Text("Click me!") }
             AnimatedVisibility(showContent) {
                 Column(
                     Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text(
-                        text = "Compose: $greetingState",
-                        style = App.typographies.title,
-                    )
+                    Text(text = "Compose: $greetingState", style = App.typographies.title)
                 }
             }
         }
@@ -85,7 +66,5 @@ fun HomeContent(
 @Preview
 @Composable
 private fun HomeScreenPreview() {
-    AppTheme {
-        HomeContent(greetingState = "Hello Preview!")
-    }
+    AppTheme { HomeContent(greetingState = "Hello Preview!") }
 }

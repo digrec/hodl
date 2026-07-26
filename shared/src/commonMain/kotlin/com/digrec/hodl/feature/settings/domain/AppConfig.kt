@@ -6,8 +6,6 @@ package com.digrec.hodl.feature.settings.domain
  * Created by Dejan Igrec
  */
 interface AppConfig {
-    /**
-     * Current application version (X.Y.Z).
-     */
+    /** Current application version (X.Y.Z). */
     val version: String
 }

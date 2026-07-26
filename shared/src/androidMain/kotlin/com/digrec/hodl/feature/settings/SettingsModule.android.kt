@@ -6,7 +6,5 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 internal actual fun settingsPlatformModule() = module {
-    single<AppConfig> {
-        AndroidAppConfig(context = androidContext())
-    }
+  single<AppConfig> { AndroidAppConfig(context = androidContext()) }
 }

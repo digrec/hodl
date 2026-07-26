@@ -18,7 +18,7 @@ Welcome AI Coding Agent! This document contains essential technical instructions
 **Hodl** is a cross-platform cryptocurrency portfolio tracking app supporting **Android**, **iOS**, and **Desktop (JVM)**.
 
 > [!NOTE]
-> **Version Source of Truth**: Refer to [`gradle/libs.versions.toml`](gradle/libs.versions.toml) for exact library versions. Avoid hardcoding micro version strings in comments or documentation.
+> **Version Source of Truth**: Refer to [`gradle/libs.versions.toml`](gradle/libs.versions.toml) for exact library versions. All entries under `[versions]`, `[libraries]`, and `[plugins]` MUST be kept strictly in **alphabetical order**. Avoid hardcoding micro version strings in comments or documentation.
 
 ### Core Stack Summary
 - **Language**: Kotlin (Java 17 Build Toolchain; JDK 21 Runtime for Desktop Hot Reload)
@@ -29,6 +29,7 @@ Welcome AI Coding Agent! This document contains essential technical instructions
 - **Database**: Room KMP with `sqlite-bundled`
 - **Logging**: Kermit
 - **Navigation**: JetBrains Compose Navigation (`navigation-compose`)
+- **Code Formatter**: `ktfmt` (`kotlinLangStyle`, 4-space indents)
 
 ---
 
@@ -186,13 +187,19 @@ private fun HomeScreenPreview() {
 Before declaring any work complete, agents MUST execute build verification commands:
 
 ```shell
-# 1. Compile & Build all modules
+# 1. Verify Kotlin Code Formatting
+./gradlew ktfmtCheck
+
+# 2. Format Kotlin Source Files Across All Modules
+./gradlew ktfmtFormat
+
+# 3. Compile & Build all modules
 ./gradlew assemble
 
-# 2. Run Desktop App distribution
+# 4. Run Desktop App distribution
 ./gradlew :desktopApp:runDistributable
 
-# 3. Launch Desktop Hot Reload (interactive / dev testing)
+# 5. Launch Desktop Hot Reload (interactive / dev testing)
 ./gradlew :desktopApp:hotRun --auto
 ```
 

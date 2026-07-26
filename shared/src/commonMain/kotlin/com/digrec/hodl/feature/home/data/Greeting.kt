@@ -2,9 +2,7 @@ package com.digrec.hodl.feature.home.data
 
 import com.digrec.hodl.feature.home.domain.getPlatform
 
-/**
- * Created by Dejan Igrec
- */
+/** Created by Dejan Igrec */
 class Greeting {
     private val platform = getPlatform()
 

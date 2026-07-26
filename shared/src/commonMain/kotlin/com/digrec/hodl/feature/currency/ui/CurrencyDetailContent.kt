@@ -58,12 +58,7 @@ internal fun CurrencyDetailContent(
             modifier = modifier,
         )
     } else {
-        Box(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            contentAlignment = Alignment.Center
-        ) {
+        Box(modifier = modifier.fillMaxSize().padding(16.dp), contentAlignment = Alignment.Center) {
             Text(stringResource(Res.string.select_a_currency))
         }
     }
@@ -79,9 +74,7 @@ private fun CurrencyDetailView(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = {
-                    Text(currency.name)
-                },
+                title = { Text(currency.name) },
                 navigationIcon = {
                     if (canNavigateBack) {
                         IconButton(onClick = onBack) {
@@ -97,27 +90,15 @@ private fun CurrencyDetailView(
         modifier = modifier.fillMaxSize(),
     ) { paddingValues ->
         Column(
-            modifier = Modifier
-                .padding(paddingValues)
-                .padding(16.dp)
-                .fillMaxSize(),
+            modifier = Modifier.padding(paddingValues).padding(16.dp).fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
         ) {
-            Text(
-                "ID: ${currency.id}",
-                style = MaterialTheme.typography.titleMedium,
-            )
+            Text("ID: ${currency.id}", style = MaterialTheme.typography.titleMedium)
             Spacer(Modifier.height(8.dp))
-            Text(
-                "Name: ${currency.name}",
-                style = MaterialTheme.typography.bodyLarge,
-            )
+            Text("Name: ${currency.name}", style = MaterialTheme.typography.bodyLarge)
             Spacer(Modifier.height(4.dp))
-            Text(
-                "Symbol: ${currency.symbol}",
-                style = MaterialTheme.typography.bodyLarge,
-            )
+            Text("Symbol: ${currency.symbol}", style = MaterialTheme.typography.bodyLarge)
         }
     }
 }
@@ -128,11 +109,9 @@ private fun CurrencyDetailContentPreview() {
     AppTheme {
         CurrencyDetailContent(
             currencyId = 1,
-            currencies = listOf(
-                Currency(id = 1, name = "Bitcoin", symbol = "BTC")
-            ),
+            currencies = listOf(Currency(id = 1, name = "Bitcoin", symbol = "BTC")),
             onBack = {},
-            canNavigateBack = true
+            canNavigateBack = true,
         )
     }
 }

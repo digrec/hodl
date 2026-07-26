@@ -22,40 +22,23 @@ import hodl.shared.generated.resources.settings
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
-/**
- * Created by Dejan Igrec
- */
+/** Created by Dejan Igrec */
 @Composable
-fun SettingsScreen(
-    navHostController: NavHostController,
-    modifier: Modifier = Modifier,
-) {
+fun SettingsScreen(navHostController: NavHostController, modifier: Modifier = Modifier) {
     val viewModel: SettingsViewModel = koinViewModel()
 
-    SettingsContent(
-        appVersion = viewModel.appVersion,
-        modifier = modifier
-    )
+    SettingsContent(appVersion = viewModel.appVersion, modifier = modifier)
 }
 
 @Composable
-fun SettingsContent(
-    appVersion: String,
-    modifier: Modifier = Modifier,
-) {
+fun SettingsContent(appVersion: String, modifier: Modifier = Modifier) {
     Surface(modifier = modifier.fillMaxSize()) {
         Column(
-            Modifier
-                .fillMaxWidth()
-                .fillMaxSize()
-                .safeContentPadding(),
+            Modifier.fillMaxWidth().fillMaxSize().safeContentPadding(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween,
         ) {
-            Text(
-                text = stringResource(Res.string.settings),
-                style = App.typographies.headline,
-            )
+            Text(text = stringResource(Res.string.settings), style = App.typographies.headline)
             Text(
                 text = stringResource(Res.string.app_version, appVersion),
                 style = App.typographies.label,
@@ -68,7 +51,5 @@ fun SettingsContent(
 @Preview
 @Composable
 private fun SettingsScreenPreview() {
-    AppTheme {
-        SettingsContent(appVersion = "1.0.0")
-    }
+    AppTheme { SettingsContent(appVersion = "1.0.0") }
 }

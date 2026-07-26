@@ -12,8 +12,8 @@ kotlin {
         implementation(libs.androidx.activityCompose)
         implementation(libs.koin.android)
         implementation(libs.androidx.splashScreen)
+        implementation(libs.compose.uiToolingPreview)
         debugImplementation(libs.compose.uiTooling)
-        debugImplementation(libs.compose.uiToolingPreview)
     }
 }
 
@@ -31,19 +31,17 @@ android {
         versionName = libs.versions.versionName.get()
     }
 
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
-    }
+    buildTypes { getByName("release") { isMinifyEnabled = false } }
 
-    buildFeatures {
-        compose = true
-    }
+    buildFeatures { compose = true }
 
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
+    packaging { resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" } }
+}
+
+tasks.withType<com.ncorti.ktfmt.gradle.tasks.KtfmtFormatTask>().configureEach {
+    source("src/main/kotlin")
+}
+
+tasks.withType<com.ncorti.ktfmt.gradle.tasks.KtfmtCheckTask>().configureEach {
+    source("src/main/kotlin")
 }

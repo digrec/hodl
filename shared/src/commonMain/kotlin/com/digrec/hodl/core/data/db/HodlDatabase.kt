@@ -15,10 +15,7 @@ import kotlinx.coroutines.IO
  *
  * Created by Dejan Igrec
  */
-@Database(
-    entities = [Currency::class],
-    version = 1,
-)
+@Database(entities = [Currency::class], version = 1)
 @ConstructedBy(HodlDatabaseConstructor::class)
 abstract class HodlDatabase : RoomDatabase() {
     abstract fun getHodlDao(): HodlDao
@@ -28,19 +25,12 @@ abstract class HodlDatabase : RoomDatabase() {
     }
 }
 
-/**
- * Constructs a [HodlDatabase] instance.
- */
+/** Constructs a [HodlDatabase] instance. */
 @Suppress("NO_ACTUAL_FOR_EXPECT")
 expect object HodlDatabaseConstructor : RoomDatabaseConstructor<HodlDatabase> {
     override fun initialize(): HodlDatabase
 }
 
-/**
- * Returns a [HodlDatabase] instance using the provided database builder.
- */
+/** Returns a [HodlDatabase] instance using the provided database builder. */
 fun getHodlDatabase(builder: RoomDatabase.Builder<HodlDatabase>): HodlDatabase =
-    builder
-        .setDriver(BundledSQLiteDriver())
-        .setQueryCoroutineContext(Dispatchers.IO)
-        .build()
+    builder.setDriver(BundledSQLiteDriver()).setQueryCoroutineContext(Dispatchers.IO).build()

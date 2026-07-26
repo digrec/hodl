@@ -14,20 +14,19 @@ import platform.Foundation.NSUserDomainMask
  */
 fun getDatabaseBuilder(): RoomDatabase.Builder<HodlDatabase> {
     val dbFilePath = "${documentDirectory()}/${HodlDatabase.DB_FILE_NAME}"
-    return Room.databaseBuilder<HodlDatabase>(
-        name = dbFilePath,
-    )
+    return Room.databaseBuilder<HodlDatabase>(name = dbFilePath)
 }
 
 @OptIn(ExperimentalForeignApi::class)
 private fun documentDirectory(): String {
-    val documentDirectory = NSFileManager.defaultManager.URLForDirectory(
-        directory = NSDocumentDirectory,
-        inDomain = NSUserDomainMask,
-        appropriateForURL = null,
-        create = false,
-        error = null,
-    )
+    val documentDirectory =
+        NSFileManager.defaultManager.URLForDirectory(
+            directory = NSDocumentDirectory,
+            inDomain = NSUserDomainMask,
+            appropriateForURL = null,
+            create = false,
+            error = null,
+        )
 
     return requireNotNull(documentDirectory?.path)
 }

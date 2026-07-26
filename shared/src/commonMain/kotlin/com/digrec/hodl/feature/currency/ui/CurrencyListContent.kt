@@ -38,17 +38,11 @@ internal fun CurrencyListContent(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
-        TopAppBar(
-            title = {
-                Text(stringResource(Res.string.currencies))
-            },
-        )
+        TopAppBar(title = { Text(stringResource(Res.string.currencies)) })
         if (currencies.isEmpty()) {
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                contentAlignment = Alignment.Center
+                modifier = Modifier.fillMaxSize().padding(16.dp),
+                contentAlignment = Alignment.Center,
             ) {
                 Text(stringResource(Res.string.no_currencies_available))
             }
@@ -77,21 +71,16 @@ private fun CurrencyListItem(
     modifier: Modifier = Modifier,
 ) {
     ListItem(
-        headlineContent = {
-            Text(currency.name)
-        },
-        supportingContent = {
-            Text(currency.symbol)
-        },
-        modifier = modifier
-            .padding(horizontal = 16.dp, vertical = 4.dp)
-            .clickable(onClick = onClick)
-            .then(
-                if (isSelected)
-                    Modifier.background(MaterialTheme.colorScheme.primaryContainer)
-                else
-                    Modifier
-            )
+        headlineContent = { Text(currency.name) },
+        supportingContent = { Text(currency.symbol) },
+        modifier =
+            modifier
+                .padding(horizontal = 16.dp, vertical = 4.dp)
+                .clickable(onClick = onClick)
+                .then(
+                    if (isSelected) Modifier.background(MaterialTheme.colorScheme.primaryContainer)
+                    else Modifier
+                ),
     )
 }
 
@@ -100,13 +89,13 @@ private fun CurrencyListItem(
 private fun CurrencyListContentPreview() {
     AppTheme {
         CurrencyListContent(
-            currencies = listOf(
-                Currency(id = 1, name = "Bitcoin", symbol = "BTC"),
-                Currency(id = 2, name = "Ethereum", symbol = "ETH")
-            ),
+            currencies =
+                listOf(
+                    Currency(id = 1, name = "Bitcoin", symbol = "BTC"),
+                    Currency(id = 2, name = "Ethereum", symbol = "ETH"),
+                ),
             selectedCurrencyId = 1,
-            onCurrencyClick = {}
+            onCurrencyClick = {},
         )
     }
 }
-

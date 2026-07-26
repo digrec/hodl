@@ -15,14 +15,10 @@ import com.digrec.hodl.ui.theme.typography.appTypographies
 
 object App {
     val colors: AppColors
-        @Composable
-        @ReadOnlyComposable
-        get() = LocalAppColors.current
+        @Composable @ReadOnlyComposable get() = LocalAppColors.current
 
     val typographies: AppTypographies
-        @Composable
-        @ReadOnlyComposable
-        get() = LocalAppTypographies.current
+        @Composable @ReadOnlyComposable get() = LocalAppTypographies.current
 }
 
 @Composable

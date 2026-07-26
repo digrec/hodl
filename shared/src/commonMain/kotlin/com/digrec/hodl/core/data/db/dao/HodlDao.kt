@@ -13,9 +13,7 @@ import kotlinx.coroutines.flow.Flow
  */
 @Dao
 interface HodlDao {
-    @Query("SELECT * FROM Currency")
-    fun getCurrencies(): Flow<List<Currency>>
+    @Query("SELECT * FROM Currency") fun getCurrencies(): Flow<List<Currency>>
 
-    @Insert
-    suspend fun insert(currency: Currency)
+    @Insert suspend fun insert(currency: Currency)
 }

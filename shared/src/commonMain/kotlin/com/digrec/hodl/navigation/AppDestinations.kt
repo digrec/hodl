@@ -18,16 +18,8 @@ import org.jetbrains.compose.resources.StringResource
  *
  * Created by Dejan Igrec
  */
-enum class AppDestinations(
-    val icon: ImageVector,
-    val label: StringResource,
-    val route: String,
-) {
-    HOME(
-        icon = Icons.Default.Home,
-        label = Res.string.home,
-        route = Route.Home.route,
-    ),
+enum class AppDestinations(val icon: ImageVector, val label: StringResource, val route: String) {
+    HOME(icon = Icons.Default.Home, label = Res.string.home, route = Route.Home.route),
     CURRENCIES(
         icon = Icons.AutoMirrored.Default.TrendingUp,
         label = Res.string.currency,

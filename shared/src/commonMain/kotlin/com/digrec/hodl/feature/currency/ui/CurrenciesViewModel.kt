@@ -16,16 +16,18 @@ import kotlinx.coroutines.launch
  */
 class CurrenciesViewModel(hodlRepository: HodlRepository) : ViewModel() {
 
-    val currencies: StateFlow<List<Currency>> = hodlRepository.getCurrencies()
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000L),
-            initialValue = emptyList()
-        )
+    val currencies: StateFlow<List<Currency>> =
+        hodlRepository
+            .getCurrencies()
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000L),
+                initialValue = emptyList(),
+            )
 
     init {
         viewModelScope.launch {
-            //insertTestCurrenciesIntoDB(hodlRepository)
+            // insertTestCurrenciesIntoDB(hodlRepository)
         }
     }
 }

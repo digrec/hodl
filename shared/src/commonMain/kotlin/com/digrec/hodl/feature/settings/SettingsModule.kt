@@ -6,12 +6,8 @@ import org.koin.dsl.module
 
 internal val settingsModule
     get() = module {
-        includes(
-            settingsPlatformModule(),
-        )
-        factory {
-            SettingsViewModel(appConfig = get())
-        }
+        includes(settingsPlatformModule())
+        factory { SettingsViewModel(appConfig = get()) }
     }
 
 internal expect fun settingsPlatformModule(): Module

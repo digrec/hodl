@@ -8,12 +8,6 @@ import androidx.compose.ui.graphics.Color
 
 @Stable
 @ConsistentCopyVisibility
-data class AppColors internal constructor(
-    val btcOrange: Color,
-    val materialColors: ColorScheme,
-)
+data class AppColors internal constructor(val btcOrange: Color, val materialColors: ColorScheme)
 
-@Composable
-fun appColors(): AppColors = remember {
-    darkColorScheme()
-}
+@Composable fun appColors(): AppColors = remember { darkColorScheme() }

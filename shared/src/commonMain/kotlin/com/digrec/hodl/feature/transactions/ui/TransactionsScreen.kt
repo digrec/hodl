@@ -24,30 +24,20 @@ import org.koin.compose.viewmodel.koinViewModel
  * Created by Dejan Igrec
  */
 @Composable
-fun TransactionsScreen(
-    navHostController: NavHostController,
-    modifier: Modifier = Modifier,
-) {
+fun TransactionsScreen(navHostController: NavHostController, modifier: Modifier = Modifier) {
     val viewModel: TransactionsViewModel = koinViewModel()
 
     TransactionsContent(modifier = modifier)
 }
 
 @Composable
-fun TransactionsContent(
-    modifier: Modifier = Modifier,
-) {
+fun TransactionsContent(modifier: Modifier = Modifier) {
     Surface(modifier = modifier.fillMaxSize()) {
         Column(
-            Modifier
-                .fillMaxWidth()
-                .safeContentPadding(),
+            Modifier.fillMaxWidth().safeContentPadding(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Text(
-                text = stringResource(Res.string.transactions),
-                style = App.typographies.headline,
-            )
+            Text(text = stringResource(Res.string.transactions), style = App.typographies.headline)
         }
     }
 }
@@ -55,7 +45,5 @@ fun TransactionsContent(
 @Preview
 @Composable
 private fun TransactionsScreenPreview() {
-    AppTheme {
-        TransactionsContent()
-    }
+    AppTheme { TransactionsContent() }
 }

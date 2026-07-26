@@ -22,10 +22,7 @@ import com.digrec.hodl.feature.transactions.ui.TransactionsScreen
  * Created by Dejan Igrec
  */
 @Composable
-fun Navigation(
-    navHostController: NavHostController,
-    modifier: Modifier = Modifier,
-) {
+fun Navigation(navHostController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(
         navController = navHostController,
         startDestination = Route.Home.route,
@@ -35,15 +32,11 @@ fun Navigation(
         popExitTransition = { fadeOut() },
         modifier = modifier.fillMaxSize(),
     ) {
-        composable(route = Route.Home.route) {
-            HomeScreen(navHostController = navHostController)
-        }
+        composable(route = Route.Home.route) { HomeScreen(navHostController = navHostController) }
         composable(route = Route.Transactions.route) {
             TransactionsScreen(navHostController = navHostController)
         }
-        composable(route = Route.Currencies.route) {
-            CurrenciesScreen()
-        }
+        composable(route = Route.Currencies.route) { CurrenciesScreen() }
         composable(route = Route.Settings.route) {
             SettingsScreen(navHostController = navHostController)
         }

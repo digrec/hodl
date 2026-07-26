@@ -62,6 +62,7 @@ about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform
 | **Dependency Injection** | Koin | [`gradle/libs.versions.toml`](gradle/libs.versions.toml) |
 | **Database** | Room KMP (`sqlite-bundled`) | [`gradle/libs.versions.toml`](gradle/libs.versions.toml) |
 | **Logging** | Kermit | [`gradle/libs.versions.toml`](gradle/libs.versions.toml) |
+| **Code Formatter** | ktfmt (`kotlinLangStyle`) | [`gradle/libs.versions.toml`](gradle/libs.versions.toml) |
 
 > [!NOTE]
 > All specific library versions are defined centrally in [`gradle/libs.versions.toml`](gradle/libs.versions.toml).

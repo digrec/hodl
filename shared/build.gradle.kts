@@ -13,9 +13,7 @@ plugins {
 }
 
 kotlin {
-    compilerOptions {
-        freeCompilerArgs.add("-Xexpect-actual-classes")
-    }
+    compilerOptions { freeCompilerArgs.add("-Xexpect-actual-classes") }
 
     android {
         namespace = "${libs.versions.packageName.get()}.shared"
@@ -23,17 +21,11 @@ kotlin {
 
         minSdk = libs.versions.androidMinSdk.get().toInt()
 
-        androidResources {
-            enable = true
-        }
-        withHostTest {
-            isIncludeAndroidResources = true
-        }
+        androidResources { enable = true }
+        withHostTest { isIncludeAndroidResources = true }
     }
 
-    listOf(
-        iosArm64(), iosSimulatorArm64()
-    ).forEach { iosTarget ->
+    listOf(iosArm64(), iosSimulatorArm64()).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "Shared"
             isStatic = true
@@ -70,12 +62,8 @@ kotlin {
     }
 
     sourceSets {
-        androidMain.dependencies {
-            implementation(libs.compose.uiTooling)
-        }
-        iosMain.dependencies {
-            implementation(libs.kotlinx.coroutinesCore)
-        }
+        androidMain.dependencies { implementation(libs.compose.uiTooling) }
+        iosMain.dependencies { implementation(libs.kotlinx.coroutinesCore) }
     }
 }
 
@@ -86,14 +74,10 @@ dependencies {
     add("kspDesktop", libs.androidx.roomCompiler)
 }
 
-room {
-    schemaDirectory("$projectDir/schemas")
-}
+room { schemaDirectory("$projectDir/schemas") }
 
 // Updates iOS version during the resource generation phase
-tasks.named("generateComposeResClass") {
-    dependsOn("updateIosVersion")
-}
+tasks.named("generateComposeResClass") { dependsOn("updateIosVersion") }
 
 tasks.register<UpdateIosVersion>("updateIosVersion") {
     description = "Updates iOS version during the resource generation phase"

@@ -8,9 +8,7 @@ import com.digrec.hodl.navigation.NavigationScaffold
 import com.digrec.hodl.ui.theme.App
 import com.digrec.hodl.ui.theme.AppTheme
 
-/**
- * Created by Dejan Igrec
- */
+/** Created by Dejan Igrec */
 @Composable
 fun HodlApp() {
     val navHostController = rememberNavController()

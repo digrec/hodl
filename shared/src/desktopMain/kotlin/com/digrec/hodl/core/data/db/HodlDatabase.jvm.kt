@@ -12,7 +12,5 @@ import java.io.File
 fun getDatabaseBuilder(): RoomDatabase.Builder<HodlDatabase> {
     val dbFile = File(System.getProperty("java.io.tmpdir"), HodlDatabase.DB_FILE_NAME)
 
-    return Room.databaseBuilder<HodlDatabase>(
-        name = dbFile.absolutePath,
-    )
+    return Room.databaseBuilder<HodlDatabase>(name = dbFile.absolutePath)
 }

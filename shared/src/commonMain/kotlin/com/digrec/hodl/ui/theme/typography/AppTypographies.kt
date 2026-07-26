@@ -23,27 +23,30 @@ fun appTypographies(): AppTypographies {
     val materialTypography = Typography()
 
     return AppTypographies(
-        headline = TextStyle(
-            fontFamily = FontFamily.Default,
-            fontWeight = FontWeight.Bold,
-            fontStyle = FontStyle.Normal,
-            fontSize = 22.sp,
-            lineHeight = 24.sp,
-        ),
-        title = TextStyle(
-            fontFamily = FontFamily.Default,
-            fontWeight = FontWeight.Light,
-            fontStyle = FontStyle.Normal,
-            fontSize = 16.sp,
-            lineHeight = 18.sp,
-        ),
-        body = TextStyle(
-            fontFamily = FontFamily.Default,
-            fontWeight = FontWeight.Medium,
-            fontStyle = FontStyle.Normal,
-            fontSize = 12.sp,
-            lineHeight = 14.sp,
-        ),
+        headline =
+            TextStyle(
+                fontFamily = FontFamily.Default,
+                fontWeight = FontWeight.Bold,
+                fontStyle = FontStyle.Normal,
+                fontSize = 22.sp,
+                lineHeight = 24.sp,
+            ),
+        title =
+            TextStyle(
+                fontFamily = FontFamily.Default,
+                fontWeight = FontWeight.Light,
+                fontStyle = FontStyle.Normal,
+                fontSize = 16.sp,
+                lineHeight = 18.sp,
+            ),
+        body =
+            TextStyle(
+                fontFamily = FontFamily.Default,
+                fontWeight = FontWeight.Medium,
+                fontStyle = FontStyle.Normal,
+                fontSize = 12.sp,
+                lineHeight = 14.sp,
+            ),
         label = materialTypography.labelLarge.copy(fontSize = 12.sp),
         material = materialTypography,
     )

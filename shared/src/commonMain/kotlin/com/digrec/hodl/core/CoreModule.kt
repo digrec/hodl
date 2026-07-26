@@ -14,9 +14,7 @@ import org.koin.dsl.module
  */
 internal val coreModule
     get() = module {
-        includes(
-            corePlatformModule(),
-        )
+        includes(corePlatformModule())
         single<HodlDao> { get<HodlDatabase>().getHodlDao() }
         single<HodlRepository> { HodlRepositoryImpl(dao = get()) }
     }

@@ -8,10 +8,4 @@ import androidx.room.PrimaryKey
  *
  * Created by Dejan Igrec
  */
-@Entity
-data class Currency(
-    @PrimaryKey
-    val id: Long,
-    val name: String,
-    val symbol: String,
-)
+@Entity data class Currency(@PrimaryKey val id: Long, val name: String, val symbol: String)

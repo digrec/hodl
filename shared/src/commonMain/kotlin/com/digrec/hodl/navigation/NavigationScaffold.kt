@@ -16,10 +16,7 @@ import org.jetbrains.compose.resources.stringResource
  * Created by Dejan Igrec
  */
 @Composable
-fun NavigationScaffold(
-    navHostController: NavHostController,
-    modifier: Modifier = Modifier,
-) {
+fun NavigationScaffold(navHostController: NavHostController, modifier: Modifier = Modifier) {
     val currentDestination = navHostController.currentBackStackEntryAsState().value?.destination
 
     NavigationSuiteScaffold(
@@ -34,37 +31,26 @@ fun NavigationScaffold(
                             contentDescription = stringResource(destination.label),
                         )
                     },
-                    label = {
-                        Text(stringResource(destination.label))
-                    },
+                    label = { Text(stringResource(destination.label)) },
                     selected = selected,
-                    onClick = {
-                        if (!selected) navHostController.navigateTo(destination.route)
-                    }
+                    onClick = { if (!selected) navHostController.navigateTo(destination.route) },
                 )
             }
-        }
+        },
     ) {
-        Navigation(
-            navHostController = navHostController,
-            modifier = modifier.fillMaxSize(),
-        )
+        Navigation(navHostController = navHostController, modifier = modifier.fillMaxSize())
     }
 }
 
 /**
  * Navigates to a destination route with proper state management.
  *
- * Prevents duplicate destinations, preserves state, and ensures
- * correct back stack behavior when navigating between main destinations.
+ * Prevents duplicate destinations, preserves state, and ensures correct back stack behavior when
+ * navigating between main destinations.
  */
 private fun NavHostController.navigateTo(route: String) {
     navigate(route) {
-        graph.startDestinationRoute?.let {
-            popUpTo(it) {
-                saveState = true
-            }
-        }
+        graph.startDestinationRoute?.let { popUpTo(it) { saveState = true } }
         launchSingleTop = true
         restoreState = true
     }

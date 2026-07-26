@@ -10,8 +10,7 @@ import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.includes
 
 /**
- * Initializes Koin instance with provided Koin app declaration
- * and common Koin modules.
+ * Initializes Koin instance with provided Koin app declaration and common Koin modules.
  *
  * Created by Dejan Igrec
  */

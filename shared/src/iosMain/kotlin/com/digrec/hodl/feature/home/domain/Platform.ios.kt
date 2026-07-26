@@ -2,11 +2,10 @@ package com.digrec.hodl.feature.home.domain
 
 import platform.UIKit.UIDevice
 
-/**
- * Created by Dejan Igrec
- */
+/** Created by Dejan Igrec */
 class IOSPlatform : Platform {
-    override val name: String = UIDevice.currentDevice.systemName() + " " + UIDevice.currentDevice.systemVersion
+    override val name: String =
+        UIDevice.currentDevice.systemName() + " " + UIDevice.currentDevice.systemVersion
 }
 
 actual fun getPlatform(): Platform = IOSPlatform()

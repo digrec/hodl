@@ -9,23 +9,20 @@ import androidx.compose.ui.window.rememberWindowState
 import com.digrec.hodl.di.initKoin
 import org.koin.core.logger.Level
 
-/**
- * Created by Dejan Igrec
- */
+/** Created by Dejan Igrec */
 fun main() {
-    initKoin {
-        printLogger(Level.DEBUG)
-    }
+    initKoin { printLogger(Level.DEBUG) }
 
     application {
         Window(
             title = "Hodl",
             onCloseRequest = ::exitApplication,
-            state = rememberWindowState(
-                width = 1000.dp,
-                height = 800.dp,
-                position = WindowPosition.Aligned(Alignment.Center),
-            ),
+            state =
+                rememberWindowState(
+                    width = 1000.dp,
+                    height = 800.dp,
+                    position = WindowPosition.Aligned(Alignment.Center),
+                ),
         ) {
             HodlApp()
         }

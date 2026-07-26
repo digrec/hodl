@@ -12,7 +12,5 @@ import org.koin.dsl.module
  * Created by Dejan Igrec
  */
 internal actual fun corePlatformModule(): Module = module {
-    single<HodlDatabase> {
-        getHodlDatabase(builder = getDatabaseBuilder())
-    }
+    single<HodlDatabase> { getHodlDatabase(builder = getDatabaseBuilder()) }
 }

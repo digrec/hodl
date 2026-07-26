@@ -13,5 +13,6 @@ sealed class Route(val route: String) {
     data object Currencies : Route(route = "/currencies")
 
     data object Transactions : Route(route = "/transactions")
+
     data object Settings : Route(route = "/settings")
 }

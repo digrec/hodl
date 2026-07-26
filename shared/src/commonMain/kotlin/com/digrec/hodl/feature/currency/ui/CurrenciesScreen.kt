@@ -25,10 +25,7 @@ import org.koin.compose.viewmodel.koinViewModel
  *
  * Created by Dejan Igrec
  */
-@OptIn(
-    ExperimentalMaterial3AdaptiveApi::class,
-    ExperimentalComposeUiApi::class
-)
+@OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun CurrenciesScreen(
     modifier: Modifier = Modifier,
@@ -39,15 +36,9 @@ fun CurrenciesScreen(
     CurrenciesContent(currencies = currencies, modifier = modifier)
 }
 
-@OptIn(
-    ExperimentalMaterial3AdaptiveApi::class,
-    ExperimentalComposeUiApi::class
-)
+@OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalComposeUiApi::class)
 @Composable
-fun CurrenciesContent(
-    currencies: List<Currency>,
-    modifier: Modifier = Modifier,
-) {
+fun CurrenciesContent(currencies: List<Currency>, modifier: Modifier = Modifier) {
     val scope = rememberCoroutineScope()
 
     val listDetailNavigator = rememberListDetailPaneScaffoldNavigator<Long>()
@@ -87,16 +78,14 @@ fun CurrenciesContent(
                 currencyId = listDetailNavigator.currentDestination?.contentKey,
                 currencies = currencies,
                 onBack = {
-                    scope.launch {
-                        listDetailNavigator.navigateBack()
-                    }
+                    scope.launch { listDetailNavigator.navigateBack() }
                     if (!listDetailNavigator.canNavigateBack()) {
                         selectedCurrencyId = null
                     }
                 },
                 canNavigateBack = listDetailNavigator.canNavigateBack(),
             )
-        }
+        },
     )
 }
 
@@ -105,10 +94,11 @@ fun CurrenciesContent(
 private fun CurrenciesScreenPreview() {
     AppTheme {
         CurrenciesContent(
-            currencies = listOf(
-                Currency(id = 1, name = "Bitcoin", symbol = "BTC"),
-                Currency(id = 2, name = "Ethereum", symbol = "ETH")
-            )
+            currencies =
+                listOf(
+                    Currency(id = 1, name = "Bitcoin", symbol = "BTC"),
+                    Currency(id = 2, name = "Ethereum", symbol = "ETH"),
+                )
         )
     }
 }

@@ -10,11 +10,11 @@ import androidx.room.RoomDatabase
  * Created by Dejan Igrec
  */
 fun getDatabaseBuilder(context: Context): RoomDatabase.Builder<HodlDatabase> {
-    val appContext = context.applicationContext
-    val dbFile = appContext.getDatabasePath(HodlDatabase.DB_FILE_NAME)
+  val appContext = context.applicationContext
+  val dbFile = appContext.getDatabasePath(HodlDatabase.DB_FILE_NAME)
 
-    return Room.databaseBuilder<HodlDatabase>(
-        context = appContext,
-        name = dbFile.absolutePath,
-    )
+  return Room.databaseBuilder<HodlDatabase>(
+      context = appContext,
+      name = dbFile.absolutePath,
+  )
 }

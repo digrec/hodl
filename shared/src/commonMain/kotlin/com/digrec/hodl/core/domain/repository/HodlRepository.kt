@@ -9,13 +9,9 @@ import kotlinx.coroutines.flow.Flow
  * Created by Dejan Igrec
  */
 interface HodlRepository {
-    /**
-     * Returns a flow of the list of currencies stored.
-     */
+    /** Returns a flow of the list of currencies stored. */
     fun getCurrencies(): Flow<List<Currency>>
 
-    /**
-     * Inserts the given currency into the database.
-     */
+    /** Inserts the given currency into the database. */
     suspend fun insert(currency: Currency)
 }
