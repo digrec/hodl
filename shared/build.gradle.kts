@@ -36,7 +36,7 @@ kotlin {
 
     jvm(name = "desktop")
 
-    jvmToolchain(jdkVersion = 17)
+    jvmToolchain(jdkVersion = libs.versions.jdkVersion.get().toInt())
 
     dependencies {
         implementation(libs.compose.foundation)

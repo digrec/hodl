@@ -5,7 +5,7 @@ plugins {
 }
 
 kotlin {
-    jvmToolchain(jdkVersion = 17)
+    jvmToolchain(jdkVersion = libs.versions.jdkVersion.get().toInt())
 
     dependencies {
         implementation(projects.shared)

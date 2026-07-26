@@ -58,7 +58,7 @@ about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform
 
 | Component | Technology | Reference |
 | :--- | :--- | :--- |
-| **Language & SDK** | Kotlin (JDK 17 toolchain), Android SDK 37 | [`gradle/libs.versions.toml`](gradle/libs.versions.toml) |
+| **Language & SDK** | Kotlin (JDK 21 toolchain), Android SDK 37 | [`gradle/libs.versions.toml`](gradle/libs.versions.toml) |
 | **Build System** | Gradle, Android Gradle Plugin (AGP) | [`gradle/libs.versions.toml`](gradle/libs.versions.toml) |
 | **UI Framework** | Compose Multiplatform | [`gradle/libs.versions.toml`](gradle/libs.versions.toml) |
 | **Dependency Injection** | Koin | [`gradle/libs.versions.toml`](gradle/libs.versions.toml) |

@@ -21,7 +21,7 @@ Welcome AI Coding Agent! This document contains essential technical instructions
 > **Version Source of Truth**: Refer to [`gradle/libs.versions.toml`](gradle/libs.versions.toml) for exact library versions. All entries under `[versions]`, `[libraries]`, and `[plugins]` MUST be kept strictly in **alphabetical order**. Avoid hardcoding micro version strings in comments or documentation.
 
 ### Core Stack Summary
-- **Language**: Kotlin (Java 17 Build Toolchain; JDK 21 Runtime for Desktop Hot Reload)
+- **Language**: Kotlin (Java 21 Build Toolchain; JDK 21 Runtime for Desktop Hot Reload)
 - **Build System**: Gradle with Version Catalogs (`libs.versions.toml`)
 - **Android SDK**: Compile & Target SDK `37`, Min SDK `24`
 - **UI Framework**: Compose Multiplatform
