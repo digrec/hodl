@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.digrec.hodl.core.data.db.model.Currency
+import com.digrec.hodl.ui.preview.PreviewData
 import com.digrec.hodl.ui.theme.AppTheme
 import hodl.shared.generated.resources.Res
 import hodl.shared.generated.resources.currencies
@@ -86,15 +87,39 @@ private fun CurrencyListItem(
 
 @Preview
 @Composable
+private fun CurrencyListItemUnselectedPreview() {
+    AppTheme {
+        CurrencyListItem(currency = PreviewData.sampleBitcoin, isSelected = false, onClick = {})
+    }
+}
+
+@Preview
+@Composable
+private fun CurrencyListItemSelectedPreview() {
+    AppTheme {
+        CurrencyListItem(currency = PreviewData.sampleBitcoin, isSelected = true, onClick = {})
+    }
+}
+
+@Preview
+@Composable
 private fun CurrencyListContentPreview() {
     AppTheme {
         CurrencyListContent(
-            currencies =
-                listOf(
-                    Currency(id = 1, name = "Bitcoin", symbol = "BTC"),
-                    Currency(id = 2, name = "Ethereum", symbol = "ETH"),
-                ),
-            selectedCurrencyId = 1,
+            currencies = PreviewData.sampleCurrencies,
+            selectedCurrencyId = PreviewData.sampleBitcoin.id,
+            onCurrencyClick = {},
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun CurrencyListContentEmptyPreview() {
+    AppTheme {
+        CurrencyListContent(
+            currencies = emptyList(),
+            selectedCurrencyId = null,
             onCurrencyClick = {},
         )
     }

@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import com.digrec.hodl.ui.preview.PreviewData
 import com.digrec.hodl.ui.theme.App
 import com.digrec.hodl.ui.theme.AppTheme
 import hodl.shared.generated.resources.Res
@@ -41,9 +42,13 @@ fun HomeScreen(navHostController: NavHostController, modifier: Modifier = Modifi
 }
 
 @Composable
-fun HomeContent(greetingState: String, modifier: Modifier = Modifier) {
+fun HomeContent(
+    greetingState: String,
+    modifier: Modifier = Modifier,
+    initialShowContent: Boolean = false,
+) {
     Surface(modifier = modifier.fillMaxSize()) {
-        var showContent by remember { mutableStateOf(false) }
+        var showContent by remember { mutableStateOf(initialShowContent) }
         Column(
             Modifier.fillMaxWidth().safeContentPadding(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -66,5 +71,11 @@ fun HomeContent(greetingState: String, modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun HomeScreenPreview() {
-    AppTheme { HomeContent(greetingState = "Hello Preview!") }
+    AppTheme { HomeContent(greetingState = PreviewData.SAMPLE_GREETING) }
+}
+
+@Preview
+@Composable
+private fun HomeScreenExpandedPreview() {
+    AppTheme { HomeContent(greetingState = PreviewData.SAMPLE_GREETING, initialShowContent = true) }
 }

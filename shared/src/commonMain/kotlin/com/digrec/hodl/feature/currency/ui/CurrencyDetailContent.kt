@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.digrec.hodl.core.data.db.model.Currency
+import com.digrec.hodl.ui.preview.PreviewData
 import com.digrec.hodl.ui.theme.AppTheme
 import hodl.shared.generated.resources.Res
 import hodl.shared.generated.resources.back
@@ -108,10 +109,23 @@ private fun CurrencyDetailView(
 private fun CurrencyDetailContentPreview() {
     AppTheme {
         CurrencyDetailContent(
-            currencyId = 1,
-            currencies = listOf(Currency(id = 1, name = "Bitcoin", symbol = "BTC")),
+            currencyId = PreviewData.sampleBitcoin.id,
+            currencies = PreviewData.sampleCurrencies,
             onBack = {},
             canNavigateBack = true,
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun CurrencyDetailContentEmptyPreview() {
+    AppTheme {
+        CurrencyDetailContent(
+            currencyId = null,
+            currencies = PreviewData.sampleCurrencies,
+            onBack = {},
+            canNavigateBack = false,
         )
     }
 }

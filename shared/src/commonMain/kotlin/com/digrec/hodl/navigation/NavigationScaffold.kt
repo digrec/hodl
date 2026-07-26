@@ -6,8 +6,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.digrec.hodl.ui.theme.AppTheme
 import org.jetbrains.compose.resources.stringResource
 
 /**
@@ -19,11 +21,28 @@ import org.jetbrains.compose.resources.stringResource
 fun NavigationScaffold(navHostController: NavHostController, modifier: Modifier = Modifier) {
     val currentDestination = navHostController.currentBackStackEntryAsState().value?.destination
 
+    NavigationScaffoldContent(
+        currentRoute = currentDestination?.route,
+        onNavigateTo = { route -> navHostController.navigateTo(route) },
+        modifier = modifier,
+    ) {
+        Navigation(navHostController = navHostController, modifier = Modifier.fillMaxSize())
+    }
+}
+
+/** Stateless adaptive navigation scaffold content for previewability and UI separation. */
+@Composable
+fun NavigationScaffoldContent(
+    currentRoute: String?,
+    onNavigateTo: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit,
+) {
     NavigationSuiteScaffold(
         modifier = modifier,
         navigationSuiteItems = {
             AppDestinations.entries.forEach { destination ->
-                val selected = currentDestination?.route == destination.route
+                val selected = currentRoute == destination.route
                 item(
                     icon = {
                         Icon(
@@ -33,12 +52,12 @@ fun NavigationScaffold(navHostController: NavHostController, modifier: Modifier 
                     },
                     label = { Text(stringResource(destination.label)) },
                     selected = selected,
-                    onClick = { if (!selected) navHostController.navigateTo(destination.route) },
+                    onClick = { if (!selected) onNavigateTo(destination.route) },
                 )
             }
         },
     ) {
-        Navigation(navHostController = navHostController, modifier = modifier.fillMaxSize())
+        content()
     }
 }
 
@@ -53,5 +72,15 @@ private fun NavHostController.navigateTo(route: String) {
         graph.startDestinationRoute?.let { popUpTo(it) { saveState = true } }
         launchSingleTop = true
         restoreState = true
+    }
+}
+
+@Preview
+@Composable
+private fun NavigationScaffoldPreview() {
+    AppTheme {
+        NavigationScaffoldContent(currentRoute = AppDestinations.HOME.route, onNavigateTo = {}) {
+            // Empty placeholder for navigation container content
+        }
     }
 }

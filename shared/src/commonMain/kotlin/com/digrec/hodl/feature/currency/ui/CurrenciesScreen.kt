@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.backhandler.BackHandler
 import androidx.compose.ui.tooling.preview.Preview
 import com.digrec.hodl.core.data.db.model.Currency
+import com.digrec.hodl.ui.preview.PreviewData
 import com.digrec.hodl.ui.theme.AppTheme
 import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
@@ -92,13 +93,5 @@ fun CurrenciesContent(currencies: List<Currency>, modifier: Modifier = Modifier)
 @Preview
 @Composable
 private fun CurrenciesScreenPreview() {
-    AppTheme {
-        CurrenciesContent(
-            currencies =
-                listOf(
-                    Currency(id = 1, name = "Bitcoin", symbol = "BTC"),
-                    Currency(id = 2, name = "Ethereum", symbol = "ETH"),
-                )
-        )
-    }
+    AppTheme { CurrenciesContent(currencies = PreviewData.sampleCurrencies) }
 }

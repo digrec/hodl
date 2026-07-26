@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.digrec.hodl.ui.preview.PreviewData
 import com.digrec.hodl.ui.theme.App
 import com.digrec.hodl.ui.theme.AppTheme
 import hodl.shared.generated.resources.Res
@@ -51,5 +52,5 @@ fun SettingsContent(appVersion: String, modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun SettingsScreenPreview() {
-    AppTheme { SettingsContent(appVersion = "1.0.0") }
+    AppTheme { SettingsContent(appVersion = PreviewData.SAMPLE_APP_VERSION) }
 }
