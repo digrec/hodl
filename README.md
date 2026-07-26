@@ -35,6 +35,8 @@ Hodl/
 │       │       └── ui/                  // Shared UI components and theme
 │       │           ├── composition/     // Local composition providers
 │       │           └── theme/           // App theme, colors, typography
+│       ├── commonTest/                  // Common unit testing suite for all targets
+│       │   └── kotlin/com/digrec/hodl/
 │       ├── androidMain/                 // Kotlin code compiled for Android platform
 │       │   └── kotlin/com/digrec/hodl/
 │       ├── iosMain/                     // Kotlin code compiled for iOS platform
@@ -61,6 +63,7 @@ about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform
 | **UI Framework** | Compose Multiplatform | [`gradle/libs.versions.toml`](gradle/libs.versions.toml) |
 | **Dependency Injection** | Koin | [`gradle/libs.versions.toml`](gradle/libs.versions.toml) |
 | **Database** | Room KMP (`sqlite-bundled`) | [`gradle/libs.versions.toml`](gradle/libs.versions.toml) |
+| **Unit Testing** | Kotlin Test, Coroutines Test, Koin Test, Turbine | [`gradle/libs.versions.toml`](gradle/libs.versions.toml) |
 | **Logging** | Kermit | [`gradle/libs.versions.toml`](gradle/libs.versions.toml) |
 | **Code Formatter** | ktfmt (`kotlinLangStyle`) | [`gradle/libs.versions.toml`](gradle/libs.versions.toml) |
 
@@ -93,6 +96,20 @@ To make a release:
 
 Open the project in Android Studio or IntelliJ and run `androidApp`, `iosApp` or `desktopApp` run
 configuration.
+
+### Running Unit Tests
+
+Execute the Kotlin Multiplatform unit testing suite for all shared code (Desktop JVM, Android Host, and iOS Simulator):
+
+```shell
+./gradlew :shared:allTests
+```
+
+Or run tests across all modules:
+
+```shell
+./gradlew test
+```
 
 ### Desktop
 

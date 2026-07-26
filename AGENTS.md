@@ -155,7 +155,48 @@ private fun HomeScreenPreview() {
 
 ---
 
-## 5. IDE Integration & Tooling Guidelines
+## 5. Unit Testing Architecture & Guidelines (`commonTest`)
+
+All unit tests for shared business logic, ViewModels, DAOs, repositories, and Koin dependency injection graphs MUST live in `shared/src/commonTest/kotlin/com/digrec/hodl/`.
+
+### A. Testing Stack & Libraries
+- **Kotlin Test (`kotlin.test`)**: Standard assertion API (`assertEquals`, `assertTrue`, `assertNotNull`).
+- **Coroutines Test (`kotlinx-coroutines-test`)**: Controlled coroutine execution via `runTest` and `UnconfinedTestDispatcher`.
+- **Turbine (`app.cash.turbine:turbine`)**: Non-flaky testing of `Flow` and `StateFlow` streams (`flow.test { assertEquals(..., awaitItem()) }`).
+- **Koin Test (`koin-test`)**: Verification of dependency injection graphs (`KoinTest`, `startKoin`, `checkModules`).
+
+### B. Mandatory Unit Testing Rules for Agents & Developers
+1. **Coroutine Main Dispatcher Setup**:
+   - ViewModels utilizing `viewModelScope` require `Dispatchers.Main`. In test classes targeting ViewModels, always set the main dispatcher in `@BeforeTest` and reset it in `@AfterTest`:
+     ```kotlin
+     private val testDispatcher = UnconfinedTestDispatcher()
+
+     @BeforeTest
+     fun setUp() {
+         Dispatchers.setMain(testDispatcher)
+     }
+
+     @AfterTest
+     fun tearDown() {
+         Dispatchers.resetMain()
+     }
+     ```
+2. **Turbine for Flow & StateFlow Emissions**:
+   - Always test `Flow` emissions (such as `HodlRepository.getCurrencies()` and `CurrenciesViewModel.currencies`) with Turbine inside `runTest`:
+     ```kotlin
+     viewModel.currencies.test {
+         assertEquals(listOf(btc), awaitItem())
+         cancelAndIgnoreRemainingEvents()
+     }
+     ```
+3. **Fake DAO Isolation Pattern**:
+   - Use `FakeHodlDao` (`shared/src/commonTest/.../core/data/db/dao/FakeHodlDao.kt`) for pure unit tests of repositories and ViewModels to avoid database setup latency.
+4. **Koin Dependency Resolution Verification**:
+   - When introducing or updating Koin modules (`appModule`, `coreModule`, feature modules), update `KoinModuleTest.kt` to ensure the Koin graph resolves cleanly without missing bindings.
+
+---
+
+## 6. IDE Integration & Tooling Guidelines
 
 - **IDE MCP Integration**:
   - If running in an IDE environment with an active IDE MCP server (e.g., `intellij-idea`), prefer using available IDE tools (such as `open_file_in_editor` or `get_file_problems`) for navigation, active file inspection, and real-time compiler diagnostics.
@@ -165,7 +206,7 @@ private fun HomeScreenPreview() {
 
 ---
 
-## 6. Git & Release Workflow
+## 7. Git & Release Workflow
 
 - **Conventional Commits Standard**: Commit messages MUST strictly follow Conventional Commits format with **both a headline AND a bulleted body explaining changes**:
   ```text
@@ -182,7 +223,7 @@ private fun HomeScreenPreview() {
 
 ---
 
-## 7. Verification & Build Commands
+## 8. Verification & Build Commands
 
 Before declaring any work complete, agents MUST execute build verification commands:
 
@@ -193,19 +234,22 @@ Before declaring any work complete, agents MUST execute build verification comma
 # 2. Format Kotlin Source Files Across All Modules
 ./gradlew ktfmtFormat
 
-# 3. Compile & Build all modules
+# 3. Execute KMP Unit Test Suite Across All Targets
+./gradlew :shared:allTests
+
+# 4. Compile & Build all modules
 ./gradlew assemble
 
-# 4. Run Desktop App distribution
+# 5. Run Desktop App distribution
 ./gradlew :desktopApp:runDistributable
 
-# 5. Launch Desktop Hot Reload (interactive / dev testing)
+# 6. Launch Desktop Hot Reload (interactive / dev testing)
 ./gradlew :desktopApp:hotRun --auto
 ```
 
 ---
 
-## 8. Agentic Backlog (`ROADMAP.md`)
+## 9. Agentic Backlog (`ROADMAP.md`)
 
 - Refer to [`ROADMAP.md`](ROADMAP.md) for current open tasks, technical debt, and agentic development loop improvements.
 - When completing a task from `ROADMAP.md`, update the corresponding checkbox (`- [x]`) and record any newly discovered technical debt or follow-up items.
