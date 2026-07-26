@@ -65,30 +65,15 @@ Hodl/
 
 Code inside `shared/src/commonMain/kotlin/com/digrec/hodl/` is organized by **Package-by-Feature** combined with **Clean Architecture**:
 
-- **`core/`**: Shared core infrastructure and domain models.
-  - `data/`: DB instances, Room DAOs (`HodlDao`), repositories (`HodlRepositoryImpl`), network/util helpers.
-  - `domain/`: Business models, Repository interfaces (`HodlRepository`), use cases.
-- **`feature/<feature_name>/`**: Feature modules (`home`, `currency`, `settings`, `transactions`).
-  - `data/`: Feature-specific data providers or local sources.
-  - `domain/`: Feature-specific domain models or logic.
-  - `ui/`: Feature ViewModels and Compose screens.
+- **`core/`**: Shared core infrastructure and domain models (`data/`, `domain/`).
+- **`feature/<feature_name>/`**: Feature modules (`currency`, `home`, `settings`, `transactions`).
 - **`di/`**: Koin modules defining dependency singletons and factories (`KoinApp.kt`, `AppModule.kt`).
 - **`navigation/`**: Compose Navigation graph & route definitions.
 - **`ui/theme/`**: Design tokens, typography, colors, and `AppTheme`.
 
-### A. Platform Entry Points & Koin Initialization
-Koin DI initialization is defined in `shared/src/commonMain/kotlin/com/digrec/hodl/di/KoinApp.kt` via `initKoin()`. Each target platform initializes Koin in its entry point:
-- **Android**: `HodlApplication` (`androidApp/src/main/`) calls `initKoin { androidContext(...) }`.
-- **Desktop**: `Main.kt` (`desktopApp/src/main/`) calls `initKoin()`.
-- **iOS**: Exposed via `initKoin()` bridge in `iosMain` and invoked during iOS app launch.
-
-### B. Room KMP Database Expect/Actual Pattern
-- Common database definition `HodlDatabase` lives in `shared/src/commonMain/.../core/data/db/HodlDatabase.kt`.
-- `expect object HodlDatabaseConstructor : RoomDatabaseConstructor<HodlDatabase>` is declared in `commonMain`.
-- Platform-specific `RoomDatabase.Builder` actual implementations live in:
-  - `shared/src/androidMain/.../HodlDatabase.android.kt` (uses `Context.getDatabasePath()`)
-  - `shared/src/desktopMain/.../HodlDatabase.desktop.kt` (uses user data directory)
-  - `shared/src/iosMain/.../HodlDatabase.ios.kt` (uses `NSDocumentDirectory`)
+### Platform Entry Points & Database Patterns
+- **Koin Initialization**: `initKoin()` lives in `shared/src/commonMain/.../di/KoinApp.kt`. Android calls `initKoin { androidContext(...) }` in `HodlApplication`, Desktop calls `initKoin()` in `Main.kt`, and iOS invokes `initKoin()` via `iosMain` bridge.
+- **Room Database Expect/Actual**: `expect object HodlDatabaseConstructor` declared in `commonMain` (`HodlDatabase.kt`). Platform `RoomDatabase.Builder` actuals live in `androidMain`, `desktopMain`, and `iosMain`.
 
 ---
 
@@ -96,129 +81,51 @@ Koin DI initialization is defined in `shared/src/commonMain/kotlin/com/digrec/ho
 
 To maintain clean separation of concerns and enable error-free `@Preview` rendering across platforms:
 
-### A. Screen / Content Component Split
-Every UI screen MUST be split into two distinct composables:
-1. **Stateful Screen (`<Feature>Screen`)**:
-   - Acts as the Koin container and navigation target.
-   - Retrieves ViewModels via `koinViewModel()`.
-   - Collects state flows and passes raw state data & action lambdas down to `<Feature>Content`.
-2. **Stateless Content (`<Feature>Content`)**:
-   - Pure `@Composable` rendering component.
-   - Accepts raw state parameters (e.g. `greetingState: String`, `currencies: List<Currency>`) and event lambdas (e.g. `onCurrencyClick: (String) -> Unit`).
-   - Does NOT touch Koin or ViewModels directly.
-
-### B. Strict Compose `@Preview` Rules
-- **Preview Content ONLY**: `@Preview` functions MUST target the stateless `<Feature>Content` composables wrapped inside `AppTheme`.
-- **NEVER Preview Stateful Screens**: Never place `@Preview` on `<Feature>Screen` directly. Doing so invokes `koinViewModel()` without an active Koin context during preview rendering, causing `IllegalStateException: KoinApplication has not been started`.
-- **Preview Imports**: Use `androidx.compose.ui.tooling.preview.Preview` for Compose Multiplatform previews in `commonMain`.
-
-### C. Compose Multiplatform Resource Access
-All UI strings and drawables MUST use the Compose Multiplatform Resources API (`org.jetbrains.compose.resources`):
-- Access strings via `stringResource(Res.string.<key>)`.
-- Access drawables via `painterResource(Res.drawable.<key>)`.
-- Generated resource accessors live under `hodl.shared.generated.resources.Res`.
-
-#### Example Pattern (`HomeScreen.kt`):
-```kotlin
-@Composable
-fun HomeScreen(
-    navHostController: NavHostController,
-    modifier: Modifier = Modifier,
-) {
-    val viewModel: HomeViewModel = koinViewModel()
-    val greetingState by viewModel.greetingState
-
-    HomeContent(
-        greetingState = greetingState,
-        modifier = modifier
-    )
-}
-
-@Composable
-fun HomeContent(
-    greetingState: String,
-    modifier: Modifier = Modifier,
-) {
-    Surface(modifier = modifier.fillMaxSize()) {
-        Text(text = stringResource(Res.string.home))
-    }
-}
-
-@Preview
-@Composable
-private fun HomeScreenPreview() {
-    AppTheme {
-        HomeContent(greetingState = "Hello Preview!")
-    }
-}
-```
+1. **Screen / Content Split**:
+   - **Stateful Screen (`<Feature>Screen`)**: Koin container & navigation target. Obtains ViewModels via `koinViewModel()`, passes state data down.
+   - **Stateless Content (`<Feature>Content`)**: Pure `@Composable` taking raw state parameters and event lambdas. Does NOT touch Koin or ViewModels.
+2. **Strict Compose `@Preview` Rules**:
+   - **Preview Content ONLY**: `@Preview` functions MUST target stateless `<Feature>Content` composables wrapped in `AppTheme`.
+   - **NEVER Preview Stateful Screens**: Never preview `<Feature>Screen` directly (invoking `koinViewModel()` without a Koin context throws `IllegalStateException: KoinApplication has not been started`).
+   - Use `androidx.compose.ui.tooling.preview.Preview` for Compose Multiplatform previews in `commonMain`.
+3. **Resource Access**: Use Compose Multiplatform Resources API (`stringResource(Res.string.<key>)`, `painterResource(Res.drawable.<key>)`). Reference accessor lives at `hodl.shared.generated.resources.Res` (run `./gradlew generateComposeResClass` if unresolved).
+4. **Reference Implementation**: See [HomeScreen.kt](shared/src/commonMain/kotlin/com/digrec/hodl/feature/home/ui/HomeScreen.kt) for canonical Screen/Content/Preview layout (`AppTheme` lives at `com.digrec.hodl.ui.theme.AppTheme`).
 
 ---
 
-## 5. Unit Testing Architecture & Guidelines (`commonTest`)
+## 5. Unit Testing Architecture Guidelines (`commonTest`)
 
-All unit tests for shared business logic, ViewModels, DAOs, repositories, and Koin dependency injection graphs MUST live in `shared/src/commonTest/kotlin/com/digrec/hodl/`.
+All unit tests for shared business logic, ViewModels, DAOs, repositories, and Koin dependency injection graphs live in `shared/src/commonTest/kotlin/com/digrec/hodl/`.
 
-### A. Testing Stack & Libraries
-- **Kotlin Test (`kotlin.test`)**: Standard assertion API (`assertEquals`, `assertTrue`, `assertNotNull`).
-- **Coroutines Test (`kotlinx-coroutines-test`)**: Controlled coroutine execution via `runTest` and `UnconfinedTestDispatcher`.
-- **Turbine (`app.cash.turbine:turbine`)**: Non-flaky testing of `Flow` and `StateFlow` streams (`flow.test { assertEquals(..., awaitItem()) }`).
-- **Koin Test (`koin-test`)**: Verification of dependency injection graphs (`KoinTest`, `startKoin`, `checkModules`).
-
-### B. Mandatory Unit Testing Rules for Agents & Developers
-1. **Coroutine Main Dispatcher Setup**:
-   - ViewModels utilizing `viewModelScope` require `Dispatchers.Main`. In test classes targeting ViewModels, always set the main dispatcher in `@BeforeTest` and reset it in `@AfterTest`:
-     ```kotlin
-     private val testDispatcher = UnconfinedTestDispatcher()
-
-     @BeforeTest
-     fun setUp() {
-         Dispatchers.setMain(testDispatcher)
-     }
-
-     @AfterTest
-     fun tearDown() {
-         Dispatchers.resetMain()
-     }
-     ```
-2. **Turbine for Flow & StateFlow Emissions**:
-   - Always test `Flow` emissions (such as `HodlRepository.getCurrencies()` and `CurrenciesViewModel.currencies`) with Turbine inside `runTest`:
-     ```kotlin
-     viewModel.currencies.test {
-         assertEquals(listOf(btc), awaitItem())
-         cancelAndIgnoreRemainingEvents()
-     }
-     ```
-3. **Fake DAO Isolation Pattern**:
-   - Use `FakeHodlDao` (`shared/src/commonTest/.../core/data/db/dao/FakeHodlDao.kt`) for pure unit tests of repositories and ViewModels to avoid database setup latency.
-4. **Koin Dependency Resolution Verification**:
-   - When introducing or updating Koin modules (`appModule`, `coreModule`, feature modules), update `KoinModuleTest.kt` to ensure the Koin graph resolves cleanly without missing bindings.
+1. **Testing Stack**: Kotlin Test (`kotlin.test`), Coroutines Test (`kotlinx-coroutines-test`), Turbine (`app.cash.turbine`), and Koin Test (`koin-test`).
+2. **Main Dispatcher Rule**: ViewModels using `viewModelScope` require `Dispatchers.setMain(UnconfinedTestDispatcher())` in `@BeforeTest` and `Dispatchers.resetMain()` in `@AfterTest`.
+3. **Turbine for Streams**: Always test `Flow` / `StateFlow` emissions with Turbine `flow.test { assertEquals(..., awaitItem()) }`.
+4. **Fake DAO Isolation**: Use `FakeHodlDao` for repository/ViewModel unit tests to avoid DB latency.
+5. **Koin Verification**: When updating Koin modules, update `KoinModuleTest.kt` to verify dependency graph resolution.
 
 ---
 
 ## 6. IDE Integration & Tooling Guidelines
 
-- **IDE MCP Integration**:
-  - If running in an IDE environment with an active IDE MCP server (e.g., `intellij-idea`), prefer using available IDE tools (such as `open_file_in_editor` or `get_file_problems`) for navigation, active file inspection, and real-time compiler diagnostics.
-- **Compose Hot Reload**:
-  - Desktop target supports Compose Hot Reload via JetBrains Runtime JDK 21.
-  - Launch auto hot reload: `./gradlew :desktopApp:hotRun --auto`.
+- **IDE MCP Integration**: If running in an IDE environment with an active IDE MCP server (e.g., `intellij-idea`), prefer using IDE tools (`open_file_in_editor`, `get_file_problems`) for navigation and real-time compiler diagnostics.
+- **Compose Hot Reload**: Desktop target supports Compose Hot Reload via JetBrains Runtime JDK 21. Launch auto hot reload: `./gradlew :desktopApp:hotRun --auto`.
 
 ---
 
 ## 7. Git & Release Workflow
 
-- **Conventional Commits Standard**: Commit messages MUST strictly follow Conventional Commits format with **both a headline AND a bulleted body explaining changes**:
+- **Conventional Commits Standard**: Commit messages MUST strictly follow Conventional Commits format with **both a headline AND a bulleted body explaining changes**, plus a `Co-authored-by:` trailer for AI transparency:
   ```text
   <type>(<optional scope>): <short description in imperative mood>
 
   - Detailed bullet point explaining what was changed and why
   - Additional context or architectural decisions
+
+  Co-authored-by: <AI Agent Name> <<agent-email-or-domain>>
   ```
   *Allowed types*: `feat`, `fix`, `refactor`, `docs`, `chore`, `test`, `style`, `ci`, `perf`.
 
-- **Release Please Integration**:
-  - Release Please automatically inspects commits on `main` branch to generate release PRs and update changelogs/version tags based on Conventional Commit types (`feat:` -> minor, `fix:` -> patch).
+- **Release Please Integration**: Release Please automatically inspects commits on `main` branch to generate release PRs and update changelogs/version tags (`feat:` -> minor, `fix:` -> patch).
   - Maintained version files: `gradle/libs.versions.toml` (`versionName`), `.release-please-manifest.json`, `README.md` badge.
 
 ---
