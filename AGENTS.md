@@ -110,6 +110,7 @@ All unit tests for shared business logic, ViewModels, DAOs, repositories, and Ko
 
 - **IDE MCP Integration**: If running in an IDE environment with an active IDE MCP server (e.g., `intellij-idea`), prefer using IDE tools (`open_file_in_editor`, `get_file_problems`) for navigation and real-time compiler diagnostics.
 - **Compose Hot Reload**: Desktop target supports Compose Hot Reload via JetBrains Runtime JDK 21. Launch auto hot reload: `./gradlew :desktopApp:hotRun --auto`.
+- **Compose Hot Reload MCP Server**: Project includes shared `.mcp.json` / `.agents/mcp_config.json` mapping `:desktopApp:hotMcpServer`. Coding agents can start this server to inspect live UI state (`take_screenshot`, `get_semantic_tree`), trigger user events (`click`, `type_text`, `scroll`), and observe hot reload status (`status`, `get_logs`). Run concurrently with `./gradlew :desktopApp:hotRun --auto`.
 
 ---
 
@@ -156,6 +157,9 @@ Before declaring any work complete, agents MUST execute build verification comma
 
 # 7. Launch Desktop Hot Reload (interactive / dev testing)
 ./gradlew :desktopApp:hotRun --auto
+
+# 8. Launch Compose Hot Reload MCP Server (AI agent UI inspection)
+./gradlew :desktopApp:hotMcpServer
 ```
 
 ---

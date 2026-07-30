@@ -7,6 +7,7 @@ agp = "9.1.1"
 androidCompileSdk = "37"
 androidMinSdk = "24"
 androidTargetSdk = "37"
+composeHotReload = "1.2.0" # TODO: Drop explicit version once Compose Multiplatform bundles compose-hot-reload 1.2.0+ natively
 composeMultiplatform = "1.11.1"
 coroutines = "1.11.0"
 jdkVersion = "21"
@@ -63,6 +64,7 @@ turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidMultiplatformLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+composeHotReload = { id = "org.jetbrains.compose.hot-reload", version.ref = "composeHotReload" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }

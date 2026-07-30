@@ -33,11 +33,6 @@ xcuserdata/
 iosApp/Configuration/version.xcconfig
 
 # ==========================================
-# AI Agents & Assistants (Local settings only)
-# ==========================================
-/.agents/mcp_config.json
-
-# ==========================================
 # OS-Specific Files (macOS, etc.)
 # ==========================================
 .DS_Store

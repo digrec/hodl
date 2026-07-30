@@ -136,3 +136,13 @@ Compose Hot Reload is supported only for the desktop target and requires JetBrai
 
 Click `Run 'desktopApp [hot]' with Compose Hot Reload` button in the file gutter of the
 `com.digrec.hodl.Main.kt` file.
+
+**AI Agent Integration (MCP Server)**
+
+The repository includes a shared `.agents/mcp_config.json` configuration exposing the Compose Hot Reload Model Context Protocol (MCP) server:
+
+```shell
+./gradlew :desktopApp:hotMcpServer
+```
+
+Connecting an MCP client (such as Claude Desktop, Cursor, or AI coding agents) enables real-time visual UI inspection (`take_screenshot`), semantic tree querying (`get_semantic_tree`), user input simulation (`click`, `type_text`, `scroll`), and automated hot-reload verification directly during development.
