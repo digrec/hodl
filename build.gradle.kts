@@ -9,7 +9,7 @@ plugins {
 }
 
 allprojects {
-    apply(plugin = "com.ncorti.ktfmt.gradle")
+    pluginManager.apply("com.ncorti.ktfmt.gradle")
 
     configure<com.ncorti.ktfmt.gradle.KtfmtExtension> { kotlinLangStyle() }
 }
