@@ -1,0 +1,23 @@
+product: android/app
+
+settings:
+  jvm:
+    release: 21
+  android:
+    namespace: com.digrec.hodl
+    applicationId: com.digrec.hodl
+    compileSdk: 37
+    minSdk: 24
+    targetSdk: 37
+    versionCode: 10000
+    versionName: "1.0.0"
+  compose:
+    enabled: true
+
+dependencies:
+  - ../shared
+  - $libs.androidx.activityCompose
+  - $libs.koin.android
+  - $libs.androidx.splashScreen
+  - $libs.compose.uiToolingPreview
+  - $libs.compose.uiTooling

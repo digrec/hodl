@@ -1,15 +1,12 @@
 # AGENTS.md - Hodl Project Agent Handbook
 
-Welcome AI Coding Agent! This document contains essential technical instructions, architectural patterns, coding guidelines, and build verification procedures for working on the **Hodl** Kotlin Multiplatform codebase.
+Welcome AI Coding Agent! This handbook defines technical instructions, architecture patterns, and verification procedures for the **Hodl** Kotlin Multiplatform codebase.
 
 > [!IMPORTANT]
-> **Core Agent Mindset & Responsibilities**:
-> As an AI coding agent working on this codebase, your primary duty is to exercise **rigorous critical thinking at all times**:
-> - **Empirical Diagnostics**: Inspect exact build logs, stack traces, and compiler errors before forming diagnostic hypotheses. Never guess root causes or fix code blindly.
-> - **No Symptom Masking**: Resolve underlying root causes. Never resolve failures by swallowing exceptions, adding dummy fallbacks, deleting failing unit tests, or suppressing compiler warnings.
-> - **Holistic Architecture Focus**: Maintain clean separation between stateful screens and stateless composables, explicit Koin DI bindings, and platform-specific expect/actual logic.
-> - **Verify Before Declaring Success**: Always execute build verification commands (`./gradlew assemble`) before claiming a task is complete.
-> - **Question Review Feedback**: Critically evaluate third-party recommendations, linter hints, or hasty refactoring proposals against the project's long-term architecture and developer experience.
+> **Core Agent Responsibilities**:
+> - **Empirical Diagnostics**: Inspect exact build logs, stack traces, and compiler errors before forming hypotheses. Never fix code blindly or mask symptoms.
+> - **Holistic Architecture**: Maintain strict separation between stateful screens and stateless composables, explicit Koin DI bindings, and platform expect/actual logic.
+> - **Verify Before Declaring Success**: Always execute verification commands (`./scripts/ktfmt.sh --dry-run`, `./kotlin build`, `./kotlin test`) before completing tasks.
 
 ---
 
@@ -17,154 +14,121 @@ Welcome AI Coding Agent! This document contains essential technical instructions
 
 **Hodl** is a cross-platform cryptocurrency portfolio tracking app supporting **Android**, **iOS**, and **Desktop (JVM)**.
 
-> [!NOTE]
-> **Version Source of Truth**: Refer to [`gradle/libs.versions.toml`](gradle/libs.versions.toml) for exact library versions. All entries under `[versions]`, `[libraries]`, and `[plugins]` MUST be kept strictly in **alphabetical order**. Avoid hardcoding micro version strings in comments or documentation.
-
-### Core Stack Summary
-- **Language**: Kotlin (Java 21 Build Toolchain; JDK 21 Runtime for Desktop Hot Reload)
-- **Build System**: Gradle with Version Catalogs (`libs.versions.toml`)
-- **Android SDK**: Compile & Target SDK `37`, Min SDK `24`
-- **UI Framework**: Compose Multiplatform
-- **Dependency Injection**: Koin (`koin-core`, `koin-compose`, `koin-compose-viewmodel`)
-- **Database**: Room KMP with `sqlite-bundled`
-- **Logging**: Kermit
-- **Navigation**: JetBrains Compose Navigation (`navigation-compose`)
-- **Code Formatter**: `ktfmt` (`kotlinLangStyle`, 4-space indents)
+- **Build System**: Standalone JetBrains Kotlin Toolchain CLI (`kotlin` / `project.yaml` / `module.yaml`, Amper-powered).
+- **Language & Runtime**: Kotlin (JDK 21 toolchain for compilation and Desktop Hot Reload).
+- **Target SDKs**: Android compile/target `37`, min `24`; iOS `iosSimulatorArm64` / `iosArm64`.
+- **UI & Navigation**: Compose Multiplatform with `navigation-compose`.
+- **DI & Database**: Koin (`koin-compose-viewmodel`) and Room KMP (`sqlite-bundled`).
+- **Dependencies**: Centralized in root [`libs.versions.toml`](libs.versions.toml) catalog and referenced via `$libs.<name>`.
+- **Code Formatter**: `ktfmt` (`kotlinLangStyle`, 4-space indents; `brew install ktfmt`, run via `./scripts/ktfmt.sh`).
 
 ---
 
 ## 2. Module & Source Directory Architecture
 
-The repository consists of four main Gradle modules:
+The repository consists of four modules managed by `project.yaml`:
 
 ```
 Hodl/
-├── shared/                              // KMP Library module (targets Android, iOS, Desktop/JVM)
-│   └── src/
-│       ├── commonMain/                  // Common Kotlin code for all targets
-│       │   └── kotlin/com/digrec/hodl/
-│       ├── androidMain/                 // Android-specific actual implementations
-│       ├── iosMain/                     // iOS-specific actual implementations & coroutines bridge
-│       └── desktopMain/                 // Desktop/JVM specific actual implementations
-├── androidApp/                          // Android Application module (plugin: com.android.application)
-│   └── src/main/                        // Standard Android source set (Java/Kotlin & AndroidManifest)
-├── desktopApp/                          // Desktop Application module (plugin: org.jetbrains.kotlin.jvm)
-│   └── src/main/                        // Standard JVM source set (Main.kt entry point)
-└── iosApp/                              // Xcode project wrapper (consumes Shared.framework)
-    └── iosApp/
+├── project.yaml / libs.versions.toml / scripts/
+├── shared/                              // KMP Library (Android, iOS, JVM)
+│   ├── composeResources/ & schemas/     // Multiplatform resources & Room schemas
+│   ├── src/ & src@{android,jvm,ios}/   // Common & platform implementations
+│   └── test/ & test@jvm/               // Common unit tests & JVM DB migration tests
+├── androidApp/                          // Android application (android/app)
+├── desktopApp/                          // Desktop application (jvm/app)
+└── iosApp/                              // iOS application (ios/app, Swift + SwiftUI)
 ```
 
 > [!IMPORTANT]
-> **Source Set Naming Caution**:
-> - `:shared` uses KMP source sets (`commonMain`, `androidMain`, `iosMain`, `desktopMain`).
-> - `:androidApp` and `:desktopApp` are single-platform target application modules, so their primary source sets live under `src/main/` (NOT `src/androidMain` or `src/desktopMain`).
+> **Source Set Naming Convention**: Kotlin Toolchain uses `src/` for common sources and platform qualifiers with `@` syntax (`src@android/`, `src@jvm/`, `src@ios/`). Unit tests follow the same pattern (`test/` and `test@jvm/`).
 
 ---
 
 ## 3. Package Structure & Clean Architecture
 
-Code inside `shared/src/commonMain/kotlin/com/digrec/hodl/` is organized by **Package-by-Feature** combined with **Clean Architecture**:
+Code inside `shared/src/com/digrec/hodl/` follows **Package-by-Feature** and **Clean Architecture**:
+- `core/`: Shared data, repository, domain models, and Room DB (`HodlDatabase.kt`).
+- `feature/<name>/`: Isolated feature modules (`currency`, `home`, `settings`, `transactions`).
+- `di/`: Koin dependency injection modules (`KoinApp.kt`, `AppModule.kt`).
+- `navigation/` & `ui/theme/`: Route definitions, design tokens, and theme.
 
-- **`core/`**: Shared core infrastructure and domain models (`data/`, `domain/`).
-- **`feature/<feature_name>/`**: Feature modules (`currency`, `home`, `settings`, `transactions`).
-- **`di/`**: Koin modules defining dependency singletons and factories (`KoinApp.kt`, `AppModule.kt`).
-- **`navigation/`**: Compose Navigation graph & route definitions.
-- **`ui/theme/`**: Design tokens, typography, colors, and `AppTheme`.
-
-### Platform Entry Points & Database Patterns
-- **Koin Initialization**: `initKoin()` lives in `shared/src/commonMain/.../di/KoinApp.kt`. Android calls `initKoin { androidContext(...) }` in `HodlApplication`, Desktop calls `initKoin()` in `Main.kt`, and iOS invokes `initKoin()` via `iosMain` bridge.
-- **Room Database Expect/Actual**: `expect object HodlDatabaseConstructor` declared in `commonMain` (`HodlDatabase.kt`). Platform `RoomDatabase.Builder` actuals live in `androidMain`, `desktopMain`, and `iosMain`.
+**Platform Entry Points & Database**:
+- **Koin Initialization**: `initKoin()` lives in `com.digrec.hodl.di.KoinApp`. Android calls `initKoin { androidContext(...) }` in `HodlApplication`, Desktop in `Main.kt`, and iOS via `iosApp/src/iOSApp.swift` (`src@ios`).
+- **Room Database Expect/Actual**: `expect object HodlDatabaseConstructor` in `shared/src/`; platform `RoomDatabase.Builder` actuals live in `shared/src@android/`, `src@jvm/`, and `src@ios/`.
 
 ---
 
 ## 4. UI Architecture & Compose Preview Guidelines
 
-To maintain clean separation of concerns and enable error-free `@Preview` rendering across platforms:
-
 1. **Screen / Content Split**:
-   - **Stateful Screen (`<Feature>Screen`)**: Koin container & navigation target. Obtains ViewModels via `koinViewModel()`, passes state data down.
-   - **Stateless Content (`<Feature>Content`)**: Pure `@Composable` taking raw state parameters and event lambdas. Does NOT touch Koin or ViewModels.
+   - **Stateful Screen (`<Feature>Screen`)**: Koin container & navigation target. Injects ViewModels (`koinViewModel()`), passes state and events down.
+   - **Stateless Content (`<Feature>Content`)**: Pure `@Composable` taking raw state parameters and event lambdas. Never touches Koin or ViewModels.
 2. **Strict Compose `@Preview` Rules**:
-   - **Preview Content ONLY**: `@Preview` functions MUST target stateless `<Feature>Content` composables wrapped in `AppTheme`.
-   - **NEVER Preview Stateful Screens**: Never preview `<Feature>Screen` directly (invoking `koinViewModel()` without a Koin context throws `IllegalStateException: KoinApplication has not been started`).
-   - Use `androidx.compose.ui.tooling.preview.Preview` for Compose Multiplatform previews in `commonMain`.
-3. **Resource Access**: Use Compose Multiplatform Resources API (`stringResource(Res.string.<key>)`, `painterResource(Res.drawable.<key>)`). Reference accessor lives at `hodl.shared.generated.resources.Res` (run `./gradlew generateComposeResClass` if unresolved).
-4. **Reference Implementation**: See [HomeScreen.kt](shared/src/commonMain/kotlin/com/digrec/hodl/feature/home/ui/HomeScreen.kt) for canonical Screen/Content/Preview layout (`AppTheme` lives at `com.digrec.hodl.ui.theme.AppTheme`).
+   - **Preview Content ONLY**: `@Preview` functions MUST target stateless `<Feature>Content` wrapped in `AppTheme`.
+   - **NEVER Preview Stateful Screens**: Invoking `koinViewModel()` outside a Koin context crashes previews.
+   - Use `androidx.compose.ui.tooling.preview.Preview` in common code (`shared/src/`).
+3. **Resource Access**: Use Compose Multiplatform Resources API (`Res.string.<key>`, `Res.drawable.<key>`).
+4. **Reference Implementation**: See [HomeScreen.kt](shared/src/com/digrec/hodl/feature/home/ui/HomeScreen.kt) for canonical pattern.
 
 ---
 
-## 5. Unit Testing Architecture Guidelines (`commonTest`)
+## 5. Unit Testing Architecture Guidelines (`shared/test`)
 
-All unit tests for shared business logic, ViewModels, DAOs, repositories, and Koin dependency injection graphs live in `shared/src/commonTest/kotlin/com/digrec/hodl/`.
-
-1. **Testing Stack**: Kotlin Test (`kotlin.test`), Coroutines Test (`kotlinx-coroutines-test`), Turbine (`app.cash.turbine`), Koin Test (`koin-test`), and Room Testing (`androidx.room.testing`).
-2. **Main Dispatcher Rule**: ViewModels using `viewModelScope` require `Dispatchers.setMain(UnconfinedTestDispatcher())` in `@BeforeTest` and `Dispatchers.resetMain()` in `@AfterTest`.
+Unit tests live in `shared/test/` (common) and `shared/test@jvm/` (JVM migration tests).
+1. **Testing Stack**: `kotlin.test`, `kotlinx-coroutines-test`, Turbine (`app.cash.turbine`), `koin-test`, and `androidx.room.testing`.
+2. **Main Dispatcher**: ViewModels require `Dispatchers.setMain(UnconfinedTestDispatcher())` in `@BeforeTest` and `Dispatchers.resetMain()` in `@AfterTest`.
 3. **Turbine for Streams**: Always test `Flow` / `StateFlow` emissions with Turbine `flow.test { assertEquals(..., awaitItem()) }`.
 4. **Fake DAO Isolation**: Use `FakeHodlDao` for repository/ViewModel unit tests to avoid DB latency.
-5. **Koin Verification**: When updating Koin modules, update `KoinModuleTest.kt` to verify dependency graph resolution.
-6. **Room Database Migration Testing**: Database migration tests live in `shared/src/desktopTest/kotlin/.../HodlDatabaseMigrationTest.kt` using `MigrationTestHelper` and `BundledSQLiteDriver()` to validate schema creation against `shared/schemas/` without requiring Android emulator runtime.
+5. **Koin Verification**: Verify DI resolution via `KoinModuleTest.kt`.
+6. **Database Migration Testing**: Migration tests live in `test@jvm/.../HodlDatabaseMigrationTest.kt` using `MigrationTestHelper` and `BundledSQLiteDriver()`.
 
 ---
 
 ## 6. IDE Integration & Tooling Guidelines
 
-- **IDE MCP Integration**: If running in an IDE environment with an active IDE MCP server (e.g., `intellij-idea`), prefer using IDE tools (`open_file_in_editor`, `get_file_problems`) for navigation and real-time compiler diagnostics.
-- **Compose Hot Reload**: Desktop target supports Compose Hot Reload via JetBrains Runtime JDK 21. Launch auto hot reload: `./gradlew :desktopApp:hotRun --auto`.
-- **Compose Hot Reload MCP Server**: Project includes shared `.mcp.json` / `.agents/mcp_config.json` mapping `:desktopApp:hotMcpServer`. Coding agents can start this server to inspect live UI state (`take_screenshot`, `get_semantic_tree`), trigger user events (`click`, `type_text`, `scroll`), and observe hot reload status (`status`, `get_logs`). Run concurrently with `./gradlew :desktopApp:hotRun --auto`.
+- **Kotlin Toolchain CLI Priority**: Always use `./kotlin` (`build`, `test`, `run`, `clean`). Never invoke Gradle or raw compiler binaries directly.
+- **Android CLI Tooling**: When managing virtual devices (AVDs), emulators, or SDK components, ALWAYS use the installed `android` CLI (`android virtual-device ...`, `android sdk ...`) instead of raw SDK binaries (`emulator`, `adb`, `sdkmanager`).
+- **IDE MCP Integration**: When active, prefer IDE tools (`open_file_in_editor`, `get_file_problems`) for navigation and compiler diagnostics.
+- **Compose Hot Reload**: Run Desktop directly with `./kotlin run -m desktopApp`. AI agents can inspect live UI state using `./kotlin compose-hot-reload-mcp-server`.
 
 ---
 
 ## 7. Git & Release Workflow
 
-- **Conventional Commits Standard**: Commit messages MUST strictly follow Conventional Commits format with **both a headline AND a bulleted body explaining changes**, plus a `Co-authored-by:` trailer for AI transparency:
+- **Conventional Commits**: Messages MUST follow format with headline, bulleted body, and AI trailer:
   ```text
-  <type>(<optional scope>): <short description in imperative mood>
-
-  - Detailed bullet point explaining what was changed and why
-  - Additional context or architectural decisions
-
+  <type>(<scope>): <summary in imperative mood>
+  - Detailed explanation of changes
   Co-authored-by: <AI Agent Name> <<agent-email-or-domain>>
   ```
-  *Allowed types*: `feat`, `fix`, `refactor`, `docs`, `chore`, `test`, `style`, `ci`, `perf`.
-
-- **Release Please Integration**: Release Please automatically inspects commits on `main` branch to generate release PRs and update changelogs/version tags (`feat:` -> minor, `fix:` -> patch).
-  - Maintained version files: `gradle/libs.versions.toml` (`versionName`), `.release-please-manifest.json`, `README.md` badge.
+- **Version Synchronization (`./scripts/sync-versions.sh <version>`)**: Calculates `versionCode = major*10000 + minor*100 + patch` and synchronizes `libs.versions.toml`, `androidApp/module.yaml`, and iOS configurations.
+  - **Mandatory Agent Triggers**: AI agents MUST run this script: (1) After `git pull` if semver changed or release PR was merged; (2) Before release builds and packaging; (3) After `./kotlin clean`; (4) Whenever bumping the application version.
 
 ---
 
 ## 8. Verification & Build Commands
 
-Before declaring any work complete, agents MUST execute build verification commands:
+Before declaring tasks complete, agents MUST run the verification pipeline:
 
 ```shell
-# 1. Verify Kotlin Code Formatting
-./gradlew ktfmtCheck
+# Mandatory Verification Pipeline:
+./scripts/sync-versions.sh 1.0.0    # Run if semver changed, after release pull, or clean setup
+./scripts/ktfmt.sh --dry-run        # Check formatting (run ./scripts/ktfmt.sh to format)
+./kotlin build                      # Build all modules across all targets
+./kotlin test                       # Run shared unit & migration tests
 
-# 2. Format Kotlin Source Files Across All Modules
-./gradlew ktfmtFormat
-
-# 3. Execute KMP Unit Test Suite Across All Targets
-./gradlew :shared:allTests
-
-# 4. Execute Desktop Unit & Database Migration Tests
-./gradlew :shared:desktopTest
-
-# 5. Compile & Build all modules
-./gradlew assemble
-
-# 6. Run Desktop App distribution
-./gradlew :desktopApp:runDistributable
-
-# 7. Launch Desktop Hot Reload (interactive / dev testing)
-./gradlew :desktopApp:hotRun --auto
-
-# 8. Launch Compose Hot Reload MCP Server (AI agent UI inspection)
-./gradlew :desktopApp:hotMcpServer
+# Application Launch & Dev Commands:
+./kotlin run -m desktopApp          # Desktop app (with Compose Hot Reload)
+./kotlin run -m androidApp          # Android app on connected device/emulator
+./kotlin run -m iosApp -p iosSimulatorArm64 # iOS app on simulator
+./kotlin compose-hot-reload-mcp-server # Compose UI inspection MCP server
+./kotlin clean                      # Clean build output and caches
 ```
 
 ---
 
 ## 9. Agentic Backlog (`ROADMAP.md`)
 
-- Refer to [`ROADMAP.md`](ROADMAP.md) for current open tasks, technical debt, and agentic development loop improvements.
-- When completing a task from `ROADMAP.md`, update the corresponding checkbox (`- [x]`) and record any newly discovered technical debt or follow-up items.
+- Refer to [`ROADMAP.md`](ROADMAP.md) for open tasks, technical debt, and agentic loop enhancements.
+- Update the corresponding checkbox (`- [x]`) upon task completion.

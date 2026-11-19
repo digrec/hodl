@@ -12,7 +12,7 @@
       "extra-files": [
         {
           "type": "toml",
-          "path": "gradle/libs.versions.toml",
+          "path": "libs.versions.toml",
           "jsonpath": "$.versions.versionName"
         },
         {

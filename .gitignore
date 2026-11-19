@@ -1,7 +1,6 @@
 # ==========================================
-# Build & Compiler Artifacts (Gradle, Kotlin, Android)
+# Build & Compiler Artifacts (Kotlin Toolchain, Android)
 # ==========================================
-.gradle/
 .kotlin/
 **/build/
 !src/**/build/
@@ -9,28 +8,22 @@ local.properties
 .externalNativeBuild/
 .cxx/
 captures/
-/gradle/gradle-daemon-jvm.properties
 
 # ==========================================
-# IDE & Editor Configurations (IntelliJ, VS Code)
+# IDE & Editor Configurations (IntelliJ, VS Code, Antigravity)
 # ==========================================
 .idea/
 *.iml
 /.vscode/
+/skills/
 
 # ==========================================
 # Xcode & iOS Development
 # ==========================================
+*.xcworkspace/
 xcuserdata/
-*.xcodeproj/*
-!*.xcodeproj/project.pbxproj
-!*.xcodeproj/xcshareddata/
-!*.xcodeproj/project.xcworkspace/
-!*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
-
-# Generated iOS version config file
-iosApp/Configuration/version.xcconfig
+app-store-connect-auth.properties
 
 # ==========================================
 # OS-Specific Files (macOS, etc.)

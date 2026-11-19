@@ -1,0 +1,60 @@
+product:
+  type: kmp/lib
+  platforms: [ jvm, android, iosArm64, iosSimulatorArm64 ]
+
+settings:
+  jvm:
+    release: 21
+  android:
+    namespace: com.digrec.hodl.shared
+    compileSdk: 37
+    minSdk: 24
+  compose:
+    enabled: true
+    resources:
+      packageName: hodl.shared.generated.resources
+  kotlin:
+    freeCompilerArgs:
+      - -Xexpect-actual-classes
+    ksp:
+      processors:
+        - $libs.androidx.roomCompiler
+      processorOptions:
+        room.schemaLocation: "schemas"
+
+dependencies:
+  # Compose Multiplatform & UI
+  - $libs.compose.uiToolingPreview
+  - $libs.compose.uiBackhandler
+  - $libs.compose.materialIconsExtended
+  - $libs.compose.material3
+  - $libs.compose.material3AdaptiveLayout
+  - $libs.compose.material3AdaptiveNavigation
+  - $libs.compose.material3AdaptiveNavigationSuite
+  - $libs.compose.material3WindowSizeClass
+  - $libs.androidx.navigation
+  - $libs.androidx.viewmodel
+
+  # Room & SQLite
+  - $libs.androidx.roomRuntime
+  - $libs.androidx.sqlite
+
+  # Logging, Coroutines & DI
+  - $libs.kermit
+  - $libs.kotlinx.coroutinesCore
+  - $libs.koin: exported
+  - $libs.koin.compose
+  - $libs.koin.composeViewmodel
+
+dependencies@android:
+  - $libs.koin.android
+  - $libs.compose.uiTooling
+
+test-dependencies:
+  - $libs.kotlin.test
+  - $libs.kotlinx.coroutinesTest
+  - $libs.koin.test
+  - $libs.turbine
+
+test-dependencies@jvm:
+  - $libs.androidx.roomTesting

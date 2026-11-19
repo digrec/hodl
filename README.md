@@ -8,67 +8,60 @@ Crypto portfolio tracking app for Android, iOS and Desktop.
 
 ## Project Structure
 
-This KMP project utilizes a modular architecture, combining traditional KMP module organization with
-Clean Architecture principles and a package-by-feature structure for improved maintainability and
-scalability.
+This KMP project utilizes a modular architecture powered by the JetBrains Kotlin Toolchain CLI, combining Clean Architecture principles and package-by-feature structure for maintainability and scalability.
 
 ```
 Hodl/
-├── shared/                              // Code that's shared across KMP applications
+├── project.yaml                         // Root project definition
+├── kotlin                               // Standalone Kotlin Toolchain CLI wrapper
+├── libs.versions.toml                   // Centralized version catalog
+├── scripts/
+│   ├── ktfmt.sh                         // Deterministic Kotlin formatter (ktfmt)
+│   └── sync-versions.sh                 // Version code & name synchronization script
+├── shared/                              // Code shared across KMP applications
+│   ├── module.yaml                      // Declarative module definition (kmp/lib)
+│   ├── composeResources/                // Shared Compose multiplatform resources
+│   ├── schemas/                         // Room database schema JSON exports
+│   ├── src/                             // Common Kotlin code for all targets
+│   │   └── com/digrec/hodl/
+│   │       ├── HodlApp.kt               // Entry point for shared UI
+│   │       ├── core/                    // Core business logic, domain models, Room DB
+│   │       ├── di/                      // Dependency injection (Koin)
+│   │       ├── feature/                 // Feature modules (currency, home, settings, transactions)
+│   │       ├── navigation/              // Compose navigation logic & destinations
+│   │       └── ui/                      // Theme, color palette, typography
+│   ├── src@android/                     // Android-specific actual implementations
+│   ├── src@jvm/                         // Desktop JVM-specific actual implementations
+│   ├── src@ios/                         // iOS-specific actual implementations
+│   ├── test/                            // Common unit testing suite
+│   └── test@jvm/                        // JVM & Room DB migration tests
+├── androidApp/                          // Android application module (android/app)
+│   ├── module.yaml
+│   ├── res/
 │   └── src/
-│       ├── commonMain/                  // Code that’s common for all targets
-│       │   └── kotlin/com/digrec/hodl/
-│       │       ├── HodlApp.kt           // Entry point for shared UI
-│       │       ├── core/                // Core business logic, use cases, interfaces
-│       │       │   ├── domain/
-│       │       │   └── data/
-│       │       ├── di/                  // Dependency injection
-│       │       ├── feature/             // Feature modules
-│       │       │   ├── currency/
-│       │       │   │   ├── data/
-│       │       │   │   ├── domain/
-│       │       │   │   └── ui/          // UI Components, screens and ViewModels
-│       │       │   ├── home/
-│       │       │   ├── settings/
-│       │       │   └── transactions/
-│       │       ├── navigation/          // Navigation logic and graphs
-│       │       └── ui/                  // Shared UI components and theme
-│       │           ├── composition/     // Local composition providers
-│       │           └── theme/           // App theme, colors, typography
-│       ├── commonTest/                  // Common unit testing suite for all targets
-│       │   └── kotlin/com/digrec/hodl/
-│       ├── androidMain/                 // Kotlin code compiled for Android platform
-│       │   └── kotlin/com/digrec/hodl/
-│       ├── iosMain/                     // Kotlin code compiled for iOS platform
-│       │   └── kotlin/com/digrec/hodl/
-│       └── desktopMain/                 // Kotlin code compiled for desktop platforms
-│           └── kotlin/com/digrec/hodl/
-├── androidApp/                          // Android app that depends on shared module
-│   └── src/main/
-├── iosApp/                              // iOS app that depends on shared module
-│   └── iosApp/
-└── desktopApp/                          // Desktop app that depends on shared module
-    └── src/main/
+├── desktopApp/                          // Desktop application module (jvm/app)
+│   ├── module.yaml
+│   └── src/
+└── iosApp/                              // iOS application module (ios/app)
+    ├── module.yaml
+    └── src/                             // Swift entry point, SwiftUI ContentView, Info.plist
 ```
-
-Learn more
-about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
 
 ## Tech Stack & Tooling
 
 | Component | Technology | Reference |
 | :--- | :--- | :--- |
-| **Language & SDK** | Kotlin (JDK 21 toolchain), Android SDK 37 | [`gradle/libs.versions.toml`](gradle/libs.versions.toml) |
-| **Build System** | Gradle, Android Gradle Plugin (AGP) | [`gradle/libs.versions.toml`](gradle/libs.versions.toml) |
-| **UI Framework** | Compose Multiplatform | [`gradle/libs.versions.toml`](gradle/libs.versions.toml) |
-| **Dependency Injection** | Koin | [`gradle/libs.versions.toml`](gradle/libs.versions.toml) |
-| **Database** | Room KMP (`sqlite-bundled`) | [`gradle/libs.versions.toml`](gradle/libs.versions.toml) |
-| **Unit Testing** | Kotlin Test, Coroutines Test, Koin Test, Turbine | [`gradle/libs.versions.toml`](gradle/libs.versions.toml) |
-| **Logging** | Kermit | [`gradle/libs.versions.toml`](gradle/libs.versions.toml) |
-| **Code Formatter** | ktfmt (`kotlinLangStyle`) | [`gradle/libs.versions.toml`](gradle/libs.versions.toml) |
+| **Language & SDK** | Kotlin (JDK 21 toolchain), Android SDK 37 | [`libs.versions.toml`](libs.versions.toml) |
+| **Build System** | JetBrains Kotlin Toolchain CLI (`kotlin` / Amper) | [`project.yaml`](project.yaml) |
+| **UI Framework** | Compose Multiplatform | [`libs.versions.toml`](libs.versions.toml) |
+| **Dependency Injection** | Koin | [`libs.versions.toml`](libs.versions.toml) |
+| **Database** | Room KMP (`sqlite-bundled`) | [`libs.versions.toml`](libs.versions.toml) |
+| **Unit Testing** | Kotlin Test, Coroutines Test, Koin Test, Turbine | [`libs.versions.toml`](libs.versions.toml) |
+| **Logging** | Kermit | [`libs.versions.toml`](libs.versions.toml) |
+| **Code Formatter** | ktfmt (`kotlinLangStyle`, 4-space; `brew install ktfmt`) | [`scripts/ktfmt.sh`](scripts/ktfmt.sh) |
 
 > [!NOTE]
-> All specific library versions are defined centrally in [`gradle/libs.versions.toml`](gradle/libs.versions.toml).
+> All specific library versions are defined centrally in root [`libs.versions.toml`](libs.versions.toml).
 
 ### AI Coding Agents & Guidelines
 
@@ -76,73 +69,61 @@ AI Agents working on this codebase should refer to [`AGENTS.md`](AGENTS.md) for 
 
 ### Versioning
 
-This project uses [Release Please](https://github.com/googleapis/release-please) for automated
-version management and changelog generation.
+This project uses [Release Please](https://github.com/googleapis/release-please) for automated version management and changelog generation.
 
 Release Please:
-
 * Automatically determines the next semantic version based on conventional commits
 * Creates release PRs with version bumps and updated changelog
 * Updates version badges and references throughout the codebase
 
 To make a release:
-
 1. Ensure all commits follow [Conventional Commits](https://www.conventionalcommits.org/) format with a headline and detailed body (e.g., `feat:`, `fix:`, `docs:`, etc.)
-2. The Release Please GitHub Action will automatically create a release PR when new conventional
-   commits are pushed to the main branch
+2. The Release Please GitHub Action will automatically create a release PR when new conventional commits are pushed to the main branch
 3. Once the release PR is merged, a new version will be published and tags will be created
 
-## How to run
+## How to Run & Verify
 
-Open the project in Android Studio or IntelliJ and run `androidApp`, `iosApp` or `desktopApp` run
-configuration.
+Use the standalone Kotlin Toolchain CLI (`./kotlin`) for building, testing, and running:
+
+### Compile & Build All Modules
+```shell
+./kotlin build
+```
 
 ### Running Unit Tests
-
-Execute the Kotlin Multiplatform unit testing suite for all shared code (Desktop JVM, Android Host, and iOS Simulator):
-
+Execute the unit testing suite across Desktop JVM, Android, and iOS Simulator:
 ```shell
-./gradlew :shared:allTests
+./kotlin test
 ```
 
-Or run tests across all modules:
-
+### Code Formatting
+Check or apply `ktfmt` (`kotlinLangStyle`, 4-space indent) across all Kotlin sources:
 ```shell
-./gradlew test
+./scripts/ktfmt.sh --dry-run   # Verify formatting without modifying files
+./scripts/ktfmt.sh             # Format all Kotlin files in-place
+```
+Uses a locally installed `ktfmt` CLI (`brew install ktfmt`) when available, or automatically falls back to downloading `.kotlin/tooling/ktfmt-0.54.jar` via Java 21.
+
+### Running Applications
+
+**Desktop App** (with Compose Hot Reload):
+```shell
+./kotlin run -m desktopApp
 ```
 
-### Desktop
-
-Run native distribution of the desktop app using this command:
-
+**Android App** (on connected emulator/device):
 ```shell
-./gradlew :desktopApp:runDistributable
+./kotlin run -m androidApp
 ```
 
-* Desktop app version is then shown correctly because `jpackage.app-version` is set from
-  the `packageVersion` defined in desktop `build.gradle.kts` file.
-
-#### Compose Hot Reload
-
-Compose Hot Reload is supported only for the desktop target and requires JetBrains JDK 21 toolchain.
-
-**Gradle**
-
+**iOS App** (on simulator):
 ```shell
-./gradlew :desktopApp:hotRun --auto
+./kotlin run -m iosApp -p iosSimulatorArm64
 ```
 
-**IntelliJ IDE**
-
-Click `Run 'desktopApp [hot]' with Compose Hot Reload` button in the file gutter of the
-`com.digrec.hodl.Main.kt` file.
-
-**AI Agent Integration (MCP Server)**
-
-The repository includes a shared `.agents/mcp_config.json` configuration exposing the Compose Hot Reload Model Context Protocol (MCP) server:
-
+### Compose Hot Reload & AI Agent Tooling (MCP)
+The Kotlin Toolchain CLI includes a built-in MCP server for real-time Compose UI inspection:
 ```shell
-./gradlew :desktopApp:hotMcpServer
+./kotlin compose-hot-reload-mcp-server
 ```
-
-Connecting an MCP client (such as Claude Desktop, Cursor, or AI coding agents) enables real-time visual UI inspection (`take_screenshot`), semantic tree querying (`get_semantic_tree`), user input simulation (`click`, `type_text`, `scroll`), and automated hot-reload verification directly during development.
+Connecting an MCP client (such as Claude Desktop, Cursor, or AI coding agents) enables real-time visual UI inspection (`take_screenshot`), semantic tree querying (`get_semantic_tree`), user input simulation (`click`, `type_text`, `scroll`), and automated hot-reload verification directly during development. See [`.mcp.json`](.mcp.json) and [`.agents/README.md`](.agents/README.md) for client setup.

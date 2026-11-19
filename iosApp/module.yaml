@@ -1,0 +1,10 @@
+product: ios/app
+
+settings:
+  publishing:
+    group: com.digrec.hodl
+  compose:
+    enabled: true
+
+dependencies:
+  - ../shared

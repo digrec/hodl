@@ -1,0 +1,13 @@
+product: jvm/app
+
+settings:
+  jvm:
+    release: 21
+    mainClass: com.digrec.hodl.MainKt
+  compose:
+    enabled: true
+
+dependencies:
+  - ../shared
+  - $compose.desktop.currentOs
+  - $libs.kotlinx.coroutinesSwing
