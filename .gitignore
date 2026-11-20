@@ -22,6 +22,7 @@ captures/
 # ==========================================
 *.xcworkspace/
 xcuserdata/
+**/xcshareddata/xcschemes/
 **/xcshareddata/WorkspaceSettings.xcsettings
 app-store-connect-auth.properties
 
