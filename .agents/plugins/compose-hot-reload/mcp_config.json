@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "compose-hot-reload": {
+      "command": "./kotlin",
+      "args": [
+        "--log-level=off",
+        "compose-hot-reload-mcp-server"
+      ],
+      "cwd": "../../.."
+    }
+  }
+}

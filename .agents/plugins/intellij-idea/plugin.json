@@ -1,0 +1,6 @@
+{
+  "name": "intellij-idea",
+  "displayName": "IntelliJ IDEA",
+  "version": "1.0.0",
+  "description": "Project-scoped IntelliJ IDEA MCP server connecting to the local IDE Streamable HTTP endpoint for editor navigation and compiler diagnostics."
+}

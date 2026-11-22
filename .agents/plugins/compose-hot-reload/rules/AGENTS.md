@@ -1,6 +1,3 @@
----
-trigger: always_on
----
 # Rule: Leverage Compose Hot Reload MCP for Compose UI
 
 This workspace configures the `compose-hot-reload` MCP server for interactive Compose Multiplatform development.

@@ -1,0 +1,6 @@
+{
+  "name": "compose-hot-reload",
+  "displayName": "Compose Hot Reload",
+  "version": "1.0.0",
+  "description": "Project-scoped Compose Hot Reload MCP server for inspecting live Compose Multiplatform UI, triggering hot reloads, and capturing screenshots in Hodl."
+}
