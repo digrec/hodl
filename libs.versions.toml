@@ -1,5 +1,5 @@
 [versions]
-versionName = "1.0.0" # x-release-please-version
+versionName = "1.1.0" # x-release-please-version
 
 activityCompose = "1.13.0"
 composeMultiplatform = "1.12.1"
